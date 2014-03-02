@@ -1,0 +1,82 @@
+main=>
+  % 1373653: strong pseudoprime
+  % prime number: 1662803 1299989
+  if isprime(1299989) then
+      printf("is prime")
+  end.
+
+
+
+isprime(N),N<2 => false.
+isprime(2) => true.
+isprime(3) => true.
+isprime(N),(N/\1)==0, N !==2 => false.
+isprime(N),N mod 3 == 0, N !==3 => false.
+isprime(N) =>
+    S = 0,
+    D = N - 1,
+    while ((D /\ 1) == 0)   %find N-1 = 2^s * d by bitwise operation
+        S := S+1,
+        D := D>>1
+    end,
+    if (N < 1373653) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 3)==1
+    elseif (N < 9080191) then
+        witness(N, S, D, 31)==1 && witness(N, S, D, 73)==1
+    elseif (N < 4759123141) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 7)==1 && witness(N, S, D, 61)==1
+    elseif (N < 1122004669633) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 13)==1 && witness(N, S, D, 23)==1 && witness(N, S, D, 1662803)==1
+    elseif (N < 2152302898747) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 3)==1 && witness(N, S, D, 5)==1 && witness(N, S, D, 7)==1 && witness(N, S, D, 11)==1
+    elseif (N < 3474749660383) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 3)==1 && witness(N, S, D, 5)==1 && witness(N, S, D, 7)==1 && witness(N, S, D, 11)==1 && witness(N, S, D, 13)==1
+    else
+        witness(N, S, D, 2)==1 && witness(N, S, D, 3)==1 && witness(N, S, D, 5)==1 && witness(N, S, D, 7)==1 && witness(N, S, D, 11)==1 && witness(N, S, D, 13)==1 && witness(N, S, D, 17)==1
+    end.
+
+
+
+% n-1 = 2^s * d with d odd by factoring powers of 2 from n-1
+% return false: is composite number;  return true: is prime number
+witness(N, S, D, A)=Rtn =>
+    Rtn1 = 0,
+    %X = pow(A,D) mod N,
+    X = mod_power(A,D,N),
+    Y = 0,
+    F1 =3,
+
+    while (S !==0)
+        Y := (X * X) mod N,
+        if (Y == 1 && X !==1 && X!== N-1) then
+            F1 := 0   %return
+        end,
+        if F1 !==0 then
+            X := Y,
+            S := S-1
+        end
+    end,
+
+    if (F1 !== 0) then
+        if (Y !== 1) then
+            F1 := 2
+        end,
+        if F1 !== 2 then
+            Rtn1 := 1
+        end
+    end,
+    Rtn = Rtn1.
+
+% calcul a^n % mod
+mod_power(A, N, Mod)=Rtn =>
+    Power = A,
+    Result = 1,
+
+    while (N!==0)
+        if ((N/\1) !== 0) then
+            Result := (Result * Power) mod Mod
+        end,
+        Power := (Power * Power) mod Mod,
+        N := N>>1
+    end,
+    Rtn = Result.

@@ -1,0 +1,48 @@
+main=>
+    Limit = 100000000,
+
+    Sum = 0,
+    F = 3,
+    Index = 0,
+
+    %SortedSet<int> list = new SortedSet<int>();
+    List = new_list(167),
+    foreach(I in 1..167)
+        List[I] := 0
+    end,
+
+
+    foreach (I in 1..10000, F>0)
+        F := 3,
+        Number := I*I,
+        foreach (F>2, J in I + 1..10000)
+            Number := Number + J*J,
+            if (Number > Limit) then
+                F := 1
+            else
+                if (isPalindrome(Number)==1 && not member(Number, List) ) then
+                    Sum := Sum + Number,
+                    Index := Index +1,
+                    List[Index] := Number
+                end
+            end
+        end
+    end,
+
+    printf("sum of palindromic squares = %w", Sum).
+
+    isPalindrome(Number)=Rtn =>
+        Reversed = 0,
+        K = Number,
+
+        while (K > 0)
+            Reversed := 10 * Reversed + K mod 10,
+            K := K // 10
+        end,
+
+        if Number == Reversed then
+            Rtn = 1
+        else
+            Rtn = 0
+        end.
+

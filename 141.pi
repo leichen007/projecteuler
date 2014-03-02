@@ -1,0 +1,44 @@
+main=>
+    Limit = pow(10,12),
+    N=0,Ind=1,C=1,F=3,
+    ProgressiveSquares = new_list(25),
+    foreach(I in 1..25)
+        ProgressiveSquares[I] := 0
+    end,
+
+    foreach (A in 2..10000-1)
+        foreach (B in 1..A-1, (A * A * A * B * B + B * B < Limit))
+            if (gcd(A, B) <= 1) then
+                while (F>2) %C in 1..7000, N<Limit   F>2
+                    N := A * A * A * B * C * C + C * B * B,
+                    if (N >= Limit) then
+                        F:=1
+                    end,
+
+                    if (F>2 && isSquare(N)==1 && not member(N, ProgressiveSquares) ) then
+                        ProgressiveSquares[Ind] := N,Ind := Ind + 1
+                        %printf("%w\n",N),
+                        %X:=readln()
+                    end,
+                    C:=C+1
+                end,
+                C := 1,
+                F := 3
+            end
+        end
+    end,
+
+    Result = ProgressiveSquares.sum(),
+
+    printf("The sum of all progressive squares is: %w", Result).
+
+isSquare(N)=Rtn =>
+    Root=to_integer(sqrt(N)),
+    if Root*Root==N then
+        Rtn = 1
+    else
+        Rtn = 0
+    end.
+
+gcd(A, B)=Rtn =>
+    Rtn = cond(B==0,A,gcd(B, A mod B)).

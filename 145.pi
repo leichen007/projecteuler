@@ -1,0 +1,13 @@
+main=>
+    Count = 0,
+
+    foreach (I in 1..9)
+        M := I mod 4,
+        if (M==0 || M==2) then
+            Count := Count + 20*to_integer(pow(30, (I//2-1)) )
+        elseif (M==1) then
+            Count := Count + 100*to_integer(pow(500, (I//4-1)) )
+        end
+    end,
+
+    printf("There are %w reversible numbers under 1000000000", Count).

@@ -1,0 +1,22 @@
+main=>
+    N = 10 * 1000 * 1000,
+    A=new_array(N+1),
+    foreach(I in 1..N)
+        A[I]:=0
+    end,
+    
+    foreach (I in 2..N)
+        foreach(J in I..I..N)
+            A[J] := A[J]+1
+        end
+    end,
+    
+    R = 0,
+    
+    foreach (I in 2..N-1)
+        if (A[I] == A[I + 1]) then
+            R := R+1
+        end
+    end,
+    
+    printf("%w\n", R).

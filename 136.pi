@@ -1,0 +1,22 @@
+main=>
+    N = 50000000,
+    Result = 2, %take care of the cases n= 4, n = 16
+    Primes = primes(N),
+
+
+    foreach (I in 1..Primes.length)
+
+        if (Primes[I] < N // 4) then
+            Result := Result + 1
+        end,
+
+        if (Primes[I] < N // 16) then
+            Result := Result + 1
+        end,
+
+        if ((Primes[I] - 3) mod 4 == 0) then
+            Result := Result + 1
+        end
+    end,
+
+    printf("number of values with exactly 1 solution: %w", Result).

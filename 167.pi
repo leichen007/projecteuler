@@ -1,0 +1,56 @@
+main=>
+    R=0,
+    
+    V=5,
+    while(V<=21)
+        R := R + ulam(V,100000000000-1),
+        V := V + 2
+    end,
+
+    printf("%w",R).
+    
+ulam(V,N)=Rtn =>
+    Temp=new_list(2),
+    Temp[1]=0,
+    Temp[2]=0,
+    
+    %Period=0,
+    %Diff=0,
+    
+    structure(V,Temp), %&period,&diff
+
+    N:=N-2,
+
+    X=1<<V,
+    
+    M=(N mod (Temp[1]))+1,
+    D=V-2,
+
+    while(M !== 0) 
+        if((X>>V) !== 0) then
+            M:=M-1
+        end,
+        X :=(((X>>V)^(X/\1))<<V)\/(X>>1),
+        D := D+2
+    end,
+      
+    Rtn = (N/Temp[1])*(Temp[2])+D.
+    
+structure(V,Temp)=>    %int *p,int *d
+   Start = 1<<V,
+   
+   X=Start,
+   Diff=0,
+   Period=0,
+   do 
+      Diff:= Diff+2,
+      if((X>>V) !==0) then
+         Period := Period+1
+      end,
+      
+      X :=(((X>>V)^(X/\1))<<V)\/(X>>1)
+   while(X !== Start),
+   
+   Temp[1] := Period,
+   Temp[2] := Diff.
+

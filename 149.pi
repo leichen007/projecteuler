@@ -1,0 +1,68 @@
+main=>
+    S = new_list(2000*2000),
+    A = new_list(2000),
+
+    make_s(S),
+    make_a(A,S),
+
+    X=0,
+    foreach(I in 0..1999)
+        S1 :=0,
+        foreach(J in 0..1999)
+            if(S1<0) then
+                S1 := 0
+            end,
+            S1 := S1 + A[I+1,J+1],
+            if(S1>X) then
+                X := S1
+            end
+        end
+    end,
+
+    foreach(I in 0..1999)
+        S2 := 0,
+        foreach(J in 0..1999)
+            if(S2<0) then
+                S2 := 0
+            end,
+            S2 := S2 + A[J+1,I+1],
+            if(S2>X) then
+                X := S2
+            end
+        end
+    end,
+
+    printf("%w", X).
+
+
+make_s(S) =>
+    foreach(K in 1..55)
+        S_t := 300007*K,
+        S_t := S_t*(K*K),
+        S_t := S_t + 100003,
+        S_t := S_t-200003*K,
+        S_t := S_t mod 1000000,
+        S_t := S_t-500000,
+        S[K+1] := S_t
+    end,
+    %printf("into make_s222222()"),
+    foreach(K in 56..4000000)
+        S_t := (S[K-24+1] + S[K-55+1]),
+        S_t := S_t + 1000000,
+        S_t := S_t mod 1000000,
+        S_t := S_t-500000,
+        S[K+1] := S_t
+    end.
+    %printf("into make_s3333333()").
+
+
+make_a(A,S)=>
+    printf("into make_a()"),
+    foreach(I in 0..1999)
+        Aux=new_list(0),
+        foreach(J in 0..1999)
+            Aux := insert(Aux,length(Aux)+1,S[I*2000+J+1])
+            %A[I][J]=S[I*2000+J]
+        end,
+        A[I+1] := Aux
+    end.

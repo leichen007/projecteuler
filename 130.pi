@@ -1,0 +1,43 @@
+main=>
+    Limit = 25,
+    Found = 0,
+
+    N = 1,
+    Result = 0,
+
+    while (Found < Limit)
+        N := N+1,
+
+        if (not prime(N)) then
+            A := a(N),
+
+            if (A !== 0 && ((N - 1) mod A == 0)) then
+                Result := Result + N,
+                Found := Found + 1
+            end
+        end
+    end,
+
+    printf("The sum of the first %w of these composite numbers is %w", Limit, Result).
+
+    a(N)= Rtn =>
+        Rtn1=0,
+        if (gcd(N, 10) == 1) then
+            X = 1,
+            K = 1,
+
+            while (X !== 0)
+                X := (X * 10 + 1) mod N,
+                K := K+1
+            end,
+
+            Rtn1 := K
+         end,
+         Rtn = Rtn1.
+
+    gcd(A, B)=Rtn =>
+        if b==0 then
+            Rtn = a
+        else
+            Rtn = gcd(B, A mod B)
+        end.

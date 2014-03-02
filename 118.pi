@@ -1,0 +1,104 @@
+main=>
+    Perm = [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    %Perm = [9, 8, 7, 6, 5, 1, 3, 2, 4],
+    Count = 0,
+    do
+        Count := Count + checkPartitions(0, 0, Perm)
+        %printf("%w", Count)
+    while (nextPermuation(Perm)==1),    
+    printf("There are %w sets", Count).
+
+nextPermuation(Perm)=Rtn =>
+        Rtn1=0,
+        N = Perm.length,
+        I = N - 1,%%%%%%%%%%%%%%
+        F = 3,
+        while (F>2 && Perm[I] >= Perm[I+1])  %%%%%%F>2 cannot be placed after Perm[]>%%%%%%%%%%%%%%%%%
+            I := I - 1,
+            if (I == 0) then
+                Rtn1 := 0,    %%%%return
+                F :=0   %%%%%%%%%%%%%%%%%%%!!!!!!!!!!!!!!!!!!!
+            end
+        end,
+        
+        if F>2 then
+		        J = N,
+		        while (Perm[J] <= Perm[I])
+		            J := J - 1
+		        end,
+		
+		        % swap values at position i-1 and j-1
+		        swap(I-1, J-1, Perm),
+		
+		        I := I+1,
+		        J := N,
+		
+		        while (I < J)
+		            swap(I-1, J-1, Perm),
+		            I := I+1,
+		            J := J-1
+		        end,
+		
+		        Rtn1 := 1  %%%%%%%%%%%%%%%%
+		    end,
+        Rtn = Rtn1.
+
+swap(I, J, Perm) =>
+        K = Perm[I+1],
+        Perm[I+1] := Perm[J+1],
+        Perm[J+1] := K.
+
+checkPartitions(StartIndex, Prev, Perm)=Rtn =>
+        Rtn1 = 0,
+        F = 3,
+        Count = 0,%%%%%%%%
+        Number = 0,
+        foreach (F>2, I in StartIndex..Perm.length-1)
+            % form the number x of the digits startIndex -> i
+            Number := 0, %%%%%%%%%
+            foreach (J in StartIndex..I)
+                Number := Number*10 + Perm[J+1] %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            end,
+
+            if (Number>Prev),prime(Number) then
+		            % No more digits so return
+		            if (I == (Perm.length - 1)) then
+		                Rtn1 := Count + 1,
+		                F := 0
+		            else
+		                Count := Count + checkPartitions(I + 1, Number, Perm)
+		            end
+		        end
+        end,
+        if (F !==0 ) then  %%%%%%%%%%%%%%!!!!!! don't forget add if, if return before this statement
+            Rtn1 := Count
+        end,
+        Rtn = Rtn1.
+        
+/*
+    isPrime(N)=Rtn =>
+        Rtn1=1,
+        if N < 2 then
+            Rtn1 := 0
+        elseif N <4 then
+            Rtn1 := 1
+        elseif N mod 2 == 0 then
+            Rtn1 := 0
+        elseif N < 9 then
+            Rtn1 := 1
+        elseif N mod 3 == 0 then
+            Rtn1 := 0
+        elseif N < 25 then
+            Rtn1 := 1
+        else
+            S = sqrt(N).to_integer(),
+            foreach(I in 5..6..S)
+                if N mod I == 0 then
+                    Rtn1 := 0
+                elseif N mod (I+2) ==0 then
+                    Rtn1 := 0
+                end
+            end
+        end,
+        Rtn = Rtn1.
+*/

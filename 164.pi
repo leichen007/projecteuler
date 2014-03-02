@@ -1,0 +1,41 @@
+main=>
+    SUM=9,
+    DEPTH=20,
+    
+    C=new_list(2),
+ 
+    foreach(I in 1..2)
+        Aux=new_list(0),
+        foreach(J in 1..1000)
+            Aux := insert(Aux,length(Aux)+1,0)
+        end,
+        C[I] := Aux
+    end, 
+    
+    %int i,l,d,e,f,g;
+    Cnt=1,Oldcnt=0,
+    C[1,1]:=1,
+    foreach (L in 1..DEPTH) 
+        Oldcnt:=Cnt,
+        foreach (I in 0..999) 
+            C[(L/\1)+1,I+1]:=0
+        end,
+        foreach (D in 0..SUM)
+            foreach (E in 0..SUM)
+                foreach (F in 0..SUM)
+                    if (D+E+F<=SUM) then
+                        foreach (G in 0..SUM)
+                            C[(L/\1)+1, E*100+F*10+D+1] := C[(L/\1)+1, E*100+F*10+D+1] + C[((L+1)/\1)+1, 100*G+E*10+F+1]
+                        end
+                    end
+                end
+            end
+        end,
+        Cnt := 0,
+        foreach (I in 0..999)
+            Cnt := Cnt+C[(L/\1)+1,I+1]
+        end
+    end,
+    
+    printf("%w\n",Cnt-Oldcnt).
+    

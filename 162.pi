@@ -1,0 +1,34 @@
+main=>
+    NumberMaxLength = 16,
+
+    CNone = 13,
+    C0 = 1,
+    C1 = 1,
+    Ca = 1,
+    C01 = 0,
+    C0a = 0,
+    C1a = 0,
+    C01a = 0,
+    C01aNotZeroBegin = 0,
+
+    All = 0,
+
+    foreach (DigitCount in 2..NumberMaxLength)
+        C01aNotZeroBegin := C01a * 15 + C0a + C01,
+        C01a := C01a * 16 + C01 + C0a + C1a,
+
+        C01 := C01 * 15 + C0 + C1,
+        C0a := C0a * 15 + C0 + Ca,
+        C1a := C1a * 15 + C1 + Ca,
+
+        C0 := C0 * 14 + CNone,
+        C1 := C1 * 14 + CNone,
+        Ca := Ca * 14 + CNone,
+
+        CNone := CNone * 13,
+
+        All := All+C01aNotZeroBegin
+    end,
+    
+    Hex=to_hex_string(All),
+    printf("%w",Hex).

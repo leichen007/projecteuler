@@ -1,0 +1,95 @@
+	/*Cost = [
+          [999,16,12,21,999,999,999],
+          [16,999,999,17,20,999,999],
+          [12,999,999,28,999,31,999],
+          [21,17,28,999,18,19,23],
+          [999,20,999,18,999,999,11],
+          [999,999,31,19,999,999,27],
+          [999,999,999,23,11,27,999]],*/
+import util.
+main=>
+   A = 0,
+   B = 0,
+   U = 0,
+
+   V=0,
+   Ne=1, 
+   Min=0,
+   Totalcost=0,
+   Mincost=0,
+
+    /*read data from file*/ 
+    Lines = read_file_lines("network.txt"),
+    N=Lines.length,
+    Parent=new_list(Lines.length),
+    foreach(I in 1..N)
+        Parent[I] := 0
+    end,
+    Cost = new_list(Lines.length),
+    Totalcost:=read_data(Cost, Lines),
+    Totalcost := Totalcost//2,
+
+   while(Ne < N)
+      Min := 2999,
+      foreach(I in 1..N)
+         foreach(J in 1..N)
+            if Cost[I,J]<Min then
+               Min := Cost[I,J],
+               A := I,
+               U := I,
+               B := J,
+               V := J
+            end
+         end
+      end,
+      
+      U :=find(U,Parent),
+		  V :=find(V,Parent),
+		  X := uni(U,V,Parent),
+		  if X==1 then
+			   %printf("\n%d edge (%d,%d) =%d\n",Ne,A,B,Min),
+			   Ne := Ne+1,
+			   Mincost := Mincost+Min		     
+		  end,
+		  
+		  Cost[A,B] := 2999,
+		  Cost[B,A] := 2999
+   end,
+   
+   %printf("\n\t Total cost is: %d\n",Totalcost),
+   %printf("\n\t Minimum cost is: %d\n",Mincost),
+   printf("\n\t Maximum saving cost is: %d\n",Totalcost-Mincost).
+   
+
+	find(I,Parent)=Rtn =>
+		while(Parent[I] !== 0)
+		   I := Parent[I]
+		end,
+		Rtn = I.
+
+	uni(I,J,Parent)=Rtn =>
+	  Rtn1 = 0,
+
+		if I !== J then
+			Parent[J] := I,
+			Rtn1 :=1
+		end,
+		Rtn = Rtn1.
+   
+   
+read_data(Cost, Lines) =Rtn=>
+    Totalcost=0,
+    I1 = 1,
+    foreach(Line in Lines)
+        Cost[I1]= Line.split(","),
+        foreach(J in 1..Cost[I1].length)
+            if Cost[I1,J] == "-" then
+               Cost[I1,J] := 2999
+            else
+                Cost[I1,J] := to_integer(Cost[I1,J]),
+                Totalcost := Totalcost+Cost[I1,J]
+            end
+        end,
+	      I1 := I1+1
+    end,
+    Rtn = Totalcost.

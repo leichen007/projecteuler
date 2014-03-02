@@ -1,0 +1,28 @@
+main=>
+    Limit = 200,
+
+    Cost = new_list(Limit + 1),
+    Path = new_list(Limit + 1),
+    Result = 0,
+
+    foreach (I in 0..Limit)
+        Cost[I+1] := 6700,
+        Path[I+1] := 0
+    end,
+
+    backtrack(1, 0, Cost, Path),
+
+    foreach (I in 1..Limit)
+        Result := Result + Cost[I+1]
+    end,
+
+    printf("the sum of m is %d", Result).
+
+    backtrack(Power, Depth, Cost, Path)=>
+        if Power =< 200 , Depth =< to_integer(Cost[Power+1])  then
+            Cost[Power+1] := Depth,
+            Path[Depth+1] := Power,
+            foreach (I in Depth..-1..0)
+                backtrack(Power+Path[I+1], Depth+1, Cost, Path)
+            end
+        end.

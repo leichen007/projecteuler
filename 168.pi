@@ -1,0 +1,34 @@
+main=>
+    MASK=100000,
+    Sum=0,Rem=0,N=0,Den=0,Per=0,  %A=0,B=0,
+    Sum := (45*1233-480) mod MASK,
+    foreach(A in 2..9)
+        Den := 10*A-1,
+        foreach(B in A..9)
+            Rem := B,
+            N := 0,
+            Per := 0,
+            %do
+                %printf("sssss  %w   %w\n",Rem, Den),
+                Rem := Rem*10,
+
+                N := (10*N+Rem//Den) mod MASK,
+                Rem := Rem mod Den,
+                Per := Per +1,
+                %printf("%w   %w\n",Rem, Den),
+                
+            while(Rem !== B)
+                %printf("sssss  %w   %w\n",Rem, Den),
+                Rem := Rem*10,
+
+                N := (10*N+Rem//Den) mod MASK,
+                Rem := Rem mod Den,
+                Per := Per +1
+                %printf("%w   %w\n",Rem, Den)          
+            end,    
+            
+            Sum :=(Sum+(100//Per)*N) mod MASK
+        end
+    end,
+    
+    printf("%w", Sum).

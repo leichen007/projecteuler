@@ -1,0 +1,56 @@
+main=>
+   Limit = 100,
+   Result = 0,
+   Scores = new_list(0),
+   Doubles = new_list(0),
+   
+	  %build all possible single dart scores
+	  foreach(I in 1..20) 
+	      R := insert(Scores,1,I),
+	      Scores := R,
+	      R := insert(Scores,1,2*I),
+	      Scores := R,
+	      R := insert(Scores,1,3*I),
+	      Scores := R
+	  end,
+    R := insert(Scores,1,25),
+	  Scores := R,
+    R := insert(Scores,1,25*2),
+	  Scores := R,	
+
+    %make all the possible doubles
+    foreach (I in 1..20) 
+	      R := insert(Doubles,1,I*2),
+	      Doubles := R
+    end,
+    R := insert(Doubles,1,25*2),
+	  Doubles := R,
+	  
+    %Count all miss, miss, double
+    foreach (I in Doubles)  
+        if I < Limit then
+            Result := Result+1
+        end
+    end, 
+    
+    %count all miss, hit, double
+    foreach (I in 1..length(Scores)) 
+        foreach (J in Doubles) 
+            if Scores[I] + J < Limit then
+                Result := Result+1
+            end
+        end
+    end,
+    
+    %count all hit, hit, double            
+    foreach (I in 1..length(Scores))        
+        foreach (J in I..length(Scores)) 
+            foreach (K in Doubles)                      
+                if Scores[I] + Scores[J] + K < Limit then
+                    Result := Result+1
+                end
+            end
+        end
+    end,
+    
+    printf("There are %w ways to checkout", Result).

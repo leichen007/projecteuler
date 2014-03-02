@@ -1,0 +1,39 @@
+main=>
+    Limit = 30000,
+    Count = new_list(Limit+1),
+    foreach(I in 1..Limit+1)
+        Count[I] := 0
+    end,
+
+    Z = 1,
+    while (cubes(Z, Z, Z, 1) <= Limit)
+        Y := Z,
+        while (cubes(Z, Y, Z, 1) <= Limit)
+            X := Y,
+            while (cubes(Z, Y, X, 1) <= Limit)
+                N := 1,
+                while (cubes(Z, Y, X, N) <= Limit)
+                    K := cubes(Z, Y, X, N),
+                    %printf("K: %d\n",K),
+                    %Val := read_char(),
+                    Count[K+1] := Count[K+1] + 1,
+                    N := N + 1
+                end,
+                X := X + 1
+            end,
+            Y := Y+1
+        end,
+        Z := Z+1
+    end,
+
+    I = 1,
+    while(Count[I] !== 1000, I<=Limit+1)
+        I := I + 1
+    end,
+
+    printf("Minimal solution C(%w)=1000", I-1).
+
+    cubes(X1,Y1,Z1,N1)=Rtn =>
+        K = 2*(X1 * Y1 + Y1 * Z1 + X1 * Z1 ) + 4 * (X1 + Y1 + Z1 + N1 - 2) * (N1 - 1),
+        %printf("kkkk: %d\n", K),
+        Rtn = K.

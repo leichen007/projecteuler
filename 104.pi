@@ -1,0 +1,60 @@
+main =>
+    Fn2 = 1,
+    Fn1 = 1,
+    Fn = 0,
+
+    Tailcut = 1000000000,
+
+    N = 2,
+    Found = 3,
+
+    while (Found>2)
+        N:=N+1,
+        Fn := (Fn1 + Fn2) mod Tailcut,
+        Fn2 := Fn1,
+        Fn1 := Fn,
+
+        if isPandigital(Fn)==1 then
+            T := (N * 0.20898764024997873 - 0.3494850021680094),
+            if isPandigital( to_integer(pow(10, T-to_integer(T)+8) ) )==1 then
+                Found := 0
+            end
+        end
+    end,
+    
+    printf("Fibonacci number %w is the first solution ", N).
+            
+isPandigital(Fn)=Rtn =>
+    Digits = 0,
+    Count = 0,
+    Tmp=0,
+    Rtn1 = 0,
+    F = 3,
+
+    if Fn == 0 then
+        Rtn1:=0
+    else
+		    while (Fn > 0)
+		        Tmp := Digits,
+		        Digits := Digits \/ (1 << (Fn mod 10)),
+		        if Tmp == Digits then           %Check to see if the same digit is found multiple times
+		            Rtn1:=0,
+		            Fn:=0, 
+		            F := 0
+		        end,
+		        Count := Count+1,
+		        Fn := Fn//10
+		    end,
+		    
+		    if F>2 then 
+				    Mask = (1 << Count) - 1,
+				    Mask := Mask<<1,
+				    if Digits == Mask then
+				       Rtn1:=1
+				    else
+				       Rtn1:=0
+				    end
+				end
+    end,
+    Rtn = Rtn1.
+    

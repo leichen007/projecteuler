@@ -1,0 +1,79 @@
+import util.
+
+main =>
+    %reade data from file
+    Lines = read_file_lines("sets.txt"),
+    Tri = new_list(Lines.length),
+    I1 = 1,
+    foreach(Line in Lines)
+        Tri[I1] = Line.split(",").map(to_integer),
+        %write(Tri[I1]),printf("\n"),
+	      I1 := I1+1
+    end,
+    
+    %A = [20,31,40,42,38,40,42],
+    Count = 0,
+    Result = 0,
+    
+    foreach(A in Tri)
+		    Len := length(A),
+		    A := sort(A),
+		    Rule2 := verifyRule2(A),
+		    if Rule2==1 then
+		        %printf("satisfy rule2!"),
+		        S = new_list(pow(2,Len)),
+			      foreach (K in 2..pow(2,Len)) % 1 or 2
+			  		   S[K] := makeSubsetSum(A, K)
+			      end,
+			      Rule1 := verifyRule1(S),
+			      if Rule1==1 then
+			         %printf("satisfy rule1!"),
+			         Result := Result + sum(A),
+			         Count := Count+1
+			      end
+		     end
+		end,
+		printf("Special sum set is: %d", Result).
+
+% A is in ascending sort
+verifyRule2(A) =Ret =>
+     Ret1 =1,F = 3,
+     Sum1 = A[1],
+     Sum2 = 0,
+     Len = length(A),
+     foreach(I in 1..Len//2, F>2)
+         Sum1 := Sum1+A[I+1],
+         Sum2 := Sum2+A[Len-I+1],
+         if Sum1<=Sum2 then
+            Ret1 := 0,
+            F := 0
+         end
+     end,
+     Ret = Ret1.
+     
+makeSubsetSum(SortT, M) =H =>
+    Sum = 0,
+    Len = length(SortT),
+    foreach (I in 1..Len)
+       if (M/\1) == 1 then
+           Sum := Sum+SortT[I]
+       end,
+       M := M>>1
+    end,
+    H = Sum.
+    
+verifyRule1(A) =Ret =>
+    Ret1 = 1,
+    F = 3,
+    Len = length(A),
+    foreach(I in 1..Len,F>2)
+	     foreach(J in I+1..Len)
+	         if A[I]==A[J],(I/\J)==0 then
+              %printf("I: %d, J: %d\n", I, J),
+              Ret1 := 0,
+              F := 0
+	         end
+	     end
+    end,
+    Ret = Ret1.
+

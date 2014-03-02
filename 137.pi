@@ -1,0 +1,13 @@
+main=>
+    Result = 0,
+
+    foreach (K in 1..15)
+        Result := fibonacci(2*K) * fibonacci(2*K+1)
+        %Console.WriteLine(result)
+    end,
+
+    printf("The 15th nugget: %w", Result).
+
+    fibonacci(K)=Rtn =>
+        Sqrt5 = sqrt(5),
+        Rtn = to_integer(((pow( (1 + Sqrt5)/2, K) - pow( (1 - Sqrt5)/2, K))/Sqrt5)).

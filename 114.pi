@@ -1,0 +1,35 @@
+main=>
+		M = 50,
+		N = 3,
+		
+		Cache=new_list(51),
+		foreach(I in 1..51)
+		    Cache[I] := 0
+		end,
+		Solutions = f(M, N, Cache),
+		
+		printf("The row can be filled in %w ways \n", Solutions).
+		
+    f(M, N, Cache)=Rtn =>
+        Rtn1=0,
+
+        %The rest is empty
+        Solutions = 1,
+
+        %we can't fill out more
+        if N > M then
+            Rtn1 := Solutions
+        elseif Cache[M+1] !== 0 then
+            Rtn1 := Cache[M+1]
+        else
+		        foreach (Startpos in 0..(M-N))
+		            foreach (Blocklength in N..(M-Startpos))
+		                Solutions := Solutions + f(M - Startpos - Blocklength - 1, N, Cache)
+		            end
+		        end,
+		
+		        Cache[M+1] := Solutions,
+		        Rtn1 := Solutions
+		    end,
+		    
+		    Rtn = Rtn1.

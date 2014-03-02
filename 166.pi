@@ -1,0 +1,38 @@
+main=>
+    Cnt=0,
+
+    foreach(A1 in 0..9)
+        foreach(A2 in 0..9)
+            foreach(A3 in 0..9)
+                foreach(A5 in 0..9)
+                    foreach(A6 in 0..9)
+                        foreach(A7 in 0..9)
+                            foreach(A9 in 0..9)
+                                foreach(C in 0..36)
+                                    if(0 <= C-A1-A2-A3 && C-A1-A2-A3 <=9
+                                       && 0 <= -A5-A6-A7+C && -A5-A6-A7+C <=9 
+                                       && 0 <= 2*A1+A2+A3+A5-A7+A9-C 
+                                       && 2*A1+A2+A3+A5-A7+A9-C <= 9
+                                       && 0 <= -2*A1-A2-A3-A5-A6-A9+2*C 
+                                       && -2*A1-A2-A3-A5-A6-A9+2*C <= 9
+                                       && 0 <= A6+A7-A9 && A6+A7-A9<=9
+                                       && 0 <= -A1-A5-A9+C && -A1-A5-A9+C<=9
+                                       && 0 <= -2*A1-2*A2-A3-A5-A6+A7-A9+2*C
+                                       && -2*A1-2*A2-A3-A5-A6+A7-A9+2*C <= 9
+                                       && 0 <= 2*A1+A2+A5+A6-A7+A9-C 
+                                       && 2*A1+A2+A5+A6-A7+A9-C <=9
+                                       && 0 <= A1+A2+A3+A5+A9-C
+                                       && A1+A2+A3+A5+A9-C <= 9
+                                      ) then
+                                        Cnt := Cnt+1
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end,
+    
+    printf("%w",Cnt).

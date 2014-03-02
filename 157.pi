@@ -1,0 +1,60 @@
+main=>
+    E=0,I=0,N=0,J=0,S=0,
+    D=0,
+    S=0,
+   
+    Primes=primes(99999),
+   
+    N :=10,J :=1, 
+    while (N<=1000000000)
+        E := 1, I := 0,
+        while (I <= 2*J)
+            D := E,
+            while (D <= N)
+                S := S+cnt(D,N,Primes),
+                D := D*5
+            end,
+            I := I+1,
+            E := E*2    
+        end,
+        N := N*10,
+        J := J+1
+    end,
+    printf("%w\n",S).
+
+cnt(D,N,Primes)=Rtn =>
+    C=0,G=0,U=0,
+    F=3,
+    A=N+D,
+    B=A*N,
+    
+    if (B mod D==1) then
+       Rtn=0
+    else
+       B := B//D,
+       G := gcd(A,B),
+       U := 1,
+       F := 3,
+       foreach (I in 0..9591, F>2) 
+           C := 1,
+           
+           while(G mod Primes[I+1]==0) 
+               C := C+1,
+               G := G // Primes[I+1]
+           end,
+           
+           U := U*C,
+           if (G==1) then 
+               F := 1   
+           end
+       end,
+       if (G>1) then
+           U := U*2
+       end,
+       Rtn=U
+    end.
+
+gcd(A, B)=Rtn =>
+    Rtn = cond(B==0,A,gcd(B, A mod B)).
+    
+    

@@ -1,0 +1,25 @@
+main=>
+    Max = 1000000000,
+    Answer=sum1(Max),
+
+    printf("%w", Answer).
+
+    sum1(Max2)=Rtn =>
+        if (Max2<=7) then
+            Rtn=Max2*(Max2+1)//2
+        else
+            R = Max2-Max2 mod 7,
+            Ans=0,
+            foreach (I in R..Max2-1)
+                Ans := Ans + f(I)
+            end,
+            Rtn = Ans+28*sum1(R//7)
+        end.
+
+    f(I)=Rtn =>
+        if (I==0) then
+            Rtn = 1
+        else
+            Rtn = (1+I mod 7)*f(I//7)
+        end.
+

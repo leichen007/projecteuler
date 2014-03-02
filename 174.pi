@@ -1,0 +1,31 @@
+main=>
+    Squares=new_array(250002),
+    N=new_array(1000001),
+    K=0,J=0,  %I=0,
+    
+    foreach(I in 1..250001)
+        Squares[I+1]=I*I
+    end,
+    
+    foreach(I in 1..1000001)
+        N[I]=0
+    end,    
+
+    foreach(I in 3..250001)
+        J := I-2,
+        
+        while(J>0 && Squares[I+1]-Squares[J+1] <= 1000000)
+            X1 := Squares[I+1]-Squares[J+1],
+            X1 := X1+1,
+            N[X1] := N[X1]+1,
+            J := J-2
+        end
+    end,
+    
+    foreach(I in 0..1000000-1)
+        if(N[I+1]>0 && N[I+1]<11) then
+            K := K+1
+        end
+    end,
+    
+    printf("%w\n",K).

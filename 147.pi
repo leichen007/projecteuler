@@ -1,0 +1,36 @@
+main=>
+    Z=0, W=0, Sub=0, Total=0,
+
+    foreach (M in 1..43)
+        foreach (N in 1..47)
+            Sub := 0,
+            foreach (X1 in 1..M)
+                foreach (Y1 in 1..N)
+                    Sub := Sub + (M-X1+1) * (N-Y1+1)
+                end
+            end,
+            Total := Total + Sub,
+            Sub := 0,
+
+            foreach (X2 in 1..2*M)
+                foreach (Y2 in 1..2*N)
+                    Z := (X2+Y2-1) // 2,
+                    W := X2+Y2-1 - Z,
+                    %if (Z>M) continue;
+                    %if (W>M) continue;
+                    %if (Z>N) continue;
+                    %if (W>N) continue;
+                    if (Z<=M && W<=M && Z<=N && W<=N) then
+                        if (( (X2 \/ Y2) /\ 1) == 0) then
+                            Sub := Sub + ((M-Z) * (N-Z) + (M-W) * (N-W))
+                        else
+                            Sub := Sub + ((M-Z) * (N-W) + (M-W) * (N-Z))
+                        end
+                    end
+                end
+            end,
+            Total := Total + Sub
+        end
+    end,
+
+    printf("Total = %w\n", Total).

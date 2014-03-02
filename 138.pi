@@ -1,0 +1,15 @@
+main=>
+    Result = 0,
+    X = 0,
+    Y = -1,
+
+    foreach (I in 0..11)
+        Xnew := -9 * X + -4 * Y + 4,
+        Ynew := -20 * X + -9 * Y + 8,
+
+        X := Xnew,
+        Y := Ynew,
+
+        Result := Result + abs(Y)
+    end,
+    printf("Sum of first 12 L : %w", Result).

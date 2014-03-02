@@ -1,0 +1,16 @@
+main=>
+    Binom = 26,
+    TwoPow = 2,
+    Max = 0,
+    Next = 0,
+    foreach(I in 2..26)
+        Binom := Binom * (27-I),
+        Binom := Binom // I,
+        TwoPow := TwoPow * 2,
+        Next := Binom*(TwoPow-I-1),
+        if(Next > Max) then
+            Max := Next
+        end
+    end,
+
+    printf("%w",Max).

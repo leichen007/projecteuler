@@ -1,0 +1,61 @@
+main=>
+    M=100000,
+    F=1000000000000,  %%%%%%%%%%%%%%%%%%%%%%%%
+    A=new_list(M),
+    
+    F1=0,M1=0,B=1,
+    F1:=pw(2,ex(2)-ex(5)),   %%%%%%%%%%%%%%%%%%%%%%%%%%
+    printf("%w\n",F1),
+    while (B<=F)
+        M1:=B,
+        while (M1<=F)
+            
+            Temp:=F//M1//M,
+            Temp2:=F//M1 mod M,
+            
+            if (Temp !==0 ) then
+                foreach(I in 3..M-1)
+                    A[I+1] :=0,
+                    A[I+1] := A[I+1] + Temp
+                end
+            end,
+            
+            foreach (I in 3..Temp2)
+                A[I+1] := A[I+1]+1
+            end,
+            M1:=M1*5
+        end,
+        B := B*2
+    end,
+    printf("here\n"),
+    foreach (I in 3..M-1)
+        if (I mod 2!==0 && I mod 5 !==0) then
+            XX:=A[I+1],
+            F1 := F1*pw(I,XX) mod M   %%%%%%%%%%%%%%%%%%%%%%
+        end
+    end,
+    printf("%w\n",F1).
+    
+pw(N,E)=Rtn =>
+    I=1,P=1,M=100000,
+    N := N mod M,
+    
+    while (I<=E) 
+        if ((I /\E) !==0) then 
+            P := P * N mod M
+        end,
+        
+        I := I<<1,
+        N := N*N mod M
+    end,
+    
+    Rtn = P.
+
+ex(B)=Rtn =>
+    F=1000000000000,
+    N=B,E=0,
+    while (F//N>0)
+        E:=E+F//N,
+        N:=N*B
+    end,
+    Rtn=E.

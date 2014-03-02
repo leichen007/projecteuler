@@ -1,0 +1,58 @@
+main=>
+    B=13717421,A=109739369,
+    Sb=new_array(10),N=0,
+    %I=0,%%%%%%%%%%%%%%%%%%%%%%%
+    Q1=0,
+    
+		foreach(I in 0..9)
+		    Sb[I+1]=0
+		end,
+		
+		if(A>B) then
+		    A := A - B,
+		    Q1 := 1,
+		    N := N+1,
+		    Sb[N+1] := Sb[N+1]+1
+		else
+		    B := B-A,
+		    Q1 := 0,
+		    N := N+1,
+		    Sb[N+1] := Sb[N+1]+1
+		end,
+		
+		while(A!==B)
+		    if(A>B) then
+		        A := A-B,
+		        if(Q1==0) then
+		            Q1 := 1,
+		            N := N+1,
+		            Sb[N+1] := Sb[N+1]+1
+		        else 
+		            Sb[N+1] := Sb[N+1]+1
+		        end
+		    
+		    else
+		        B := B-A,
+		        if(Q1!==0) then
+		            Q1 := 0,
+		            N := N+1,
+		            Sb[N+1] := Sb[N+1]+1
+		        else 
+		            Sb[N+1] := Sb[N+1]+1
+		        end
+		    end
+		end,
+		
+		if(Q1!==0) then
+		    Sb[N+1] := Sb[N+1]+1
+		else 
+		    N := N+1,
+		    Sb[N+1] := Sb[N+1]+1 
+		end,
+	
+		printf("%w",Sb[N+1]),
+		
+		foreach(I in N-1..-1..1)
+		    printf(","),
+		    printf("%w",Sb[I+1])
+		end.

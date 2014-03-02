@@ -1,0 +1,23 @@
+main=>
+    Target = 10000,
+    Limit = 100000 + 1,
+
+    Radicals = new_list(Limit),
+    foreach (I in 1..Radicals.length)
+        Radicals[I] := [1,I]  %  1 is rad; i is n
+    end,
+
+    foreach (I in 2..Limit)
+        if (Radicals[I,1] == 1) then
+            Radicals[I,1] := I,
+            J := I+I,
+            while (J < Limit+1)
+                Radicals[J,1] := Radicals[J,1]*I,
+                J := J+I
+            end
+        end
+    end,
+
+    Radicals := sort(Radicals),
+
+    printf("The 1000th number is  %w", Radicals[Target,2]).

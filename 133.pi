@@ -1,0 +1,25 @@
+main=>
+    Result = 0,
+    Primes = primes(100000),
+    K = pow(10, 16),
+
+    foreach(I in 1..Primes.length)
+        if (mod_power(10, K, 9*Primes[I]) !== 1) then
+            Result := Result + Primes[I]
+        end
+    end,
+    printf("Sum of the primes not divisible not a factor of R(10^n): %w", Result).
+
+% calcul a^n % mod
+mod_power(A, N, Mod)=Rtn =>
+    Power = A,
+    Result = 1,
+
+    while (N!==0)
+        if ((N/\1) !== 0) then
+            Result := (Result * Power) mod Mod
+        end,
+        Power := (Power * Power) mod Mod,
+        N := N>>1
+    end,
+    Rtn = Result.

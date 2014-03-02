@@ -1,0 +1,42 @@
+main=>
+    Up=2000,
+    Memo = new_array(Up+2),
+    Sums = new_array(Up+2),
+    foreach(I in 1..Up+2)
+        Memo[I] := 0,
+        Sums[I] := 0
+    end,
+    
+    Base=1000000000,
+    Mul=0,T2=0,
+    T=0,
+
+    Memo[1] := 1,
+    foreach(I in 0..19)
+        if(I==11) then
+            Mul := Base
+        end,
+        
+        Mul := Mul//10,
+        
+        foreach(Num in Up..-1..0)
+            foreach(K in 9..-1..1)
+                T := K*K,
+                if(T+Num<=Up) then
+                    T2 := ((Mul*(K*Memo[Num+1]) mod Base) mod Base+Sums[Num+1]) mod Base,
+                    Memo[T+Num+1] :=(Memo[T+Num+1]+Memo[Num+1]) mod Base,
+                    Sums[T+Num+1] :=(Sums[T+Num+1]+T2) mod Base
+                end
+            end
+        end
+    end,
+    
+    Ans=0,
+    
+    I1 = 1,
+    while(I1*I1<=Up)
+        Ans := (Ans+Sums[I1*I1+1]) mod Base,
+        I1 := I1+1
+    end,
+    
+    printf("%w", Ans).

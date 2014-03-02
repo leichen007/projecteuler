@@ -1,0 +1,44 @@
+main=>
+   Primes = [2, 3, 5, 7, 11, 13, 17],
+   N = 1,   
+   Result = 0,
+	 Limit = 1000,
+	 Flag = 1,
+	 
+	 while (Flag == 1)
+	    X := noDSquared(N, Primes),
+	    Y := (X + 1)//2,
+	    if Y>Limit then
+	        Result := N,
+	        Flag := 0
+	    end,
+	    N := N+1
+	 end,
+	 
+	 printf("The first n with more than 1000 solutions is: %w\n", Result).
+	 
+	 
+noDSquared(N, Primes) =Rtn =>
+      Rtn1 = 0,
+	    Nod = 1,
+	    Exponent = 0,
+	    Remain = N,
+	    
+	    foreach(I in 1..7, Rtn1==0)
+	       if Primes[I]*Primes[I] > N then
+	          Rtn1 := Nod*2
+	       end,
+	       
+	       Exponent := 1,
+	     	       	       
+	       while (Remain mod Primes[I] == 0)
+	           Exponent := Exponent+2,
+	           Remain := Remain//Primes[I]
+	       end,
+	       
+	       Nod := Nod*Exponent,
+	       if Remain == 1 then
+	          Rtn1 := Nod
+	       end
+	    end,
+	    Rtn=Rtn1.

@@ -1,0 +1,11 @@
+main=>
+    N=10**25,C=0,Nc=1,
+    while (N>0)
+        if (N mod 2 !==0) then
+            Nc := Nc + C
+        else
+            C := C + Nc
+        end, 
+        N := N//2
+    end,
+    printf("%w",Nc).

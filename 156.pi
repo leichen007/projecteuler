@@ -1,0 +1,47 @@
+main=>
+    Ce=0,E=0,I=0,J=0,S=0,X=0,Y=0,
+    F1=3,F2=3,
+   
+    foreach (D in 1..9)
+        Ce:=0,
+        E:=1,
+        I:=1,
+        X:=0,
+        F1 := 3,
+        while (F1>2)
+            while ((I mod (E*10))==0)
+                Ce := Ce+1,
+                E := E*10
+            end,
+            if (Ce==15) then 
+                F1:=1 
+            end,
+            if (F1>2) then
+		            Y := 0,
+		            J := I,
+		         
+		            while (J>0)  
+		                if (J mod 10==D) then
+		                    Y := Y+1
+		                end, 
+		                J := J//10
+		            end,
+		            F2 := 3,
+		         
+		            while (Ce>0 && F2>2)
+		                if (X<=I+E && X+E*Y+Ce*(E//10)>I ) then
+		                    E := E//10,
+		                    Ce := Ce-1
+		                else
+		                    F2 := 1 
+		            end
+		         end,
+		         X := X + E*Y+Ce*(E//10),
+		         if (Ce==0 && X==I) then
+		             S := S+I
+		         end,
+		         I := I+E
+		        end
+        end
+    end,
+    printf("%w\n",S).

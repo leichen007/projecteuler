@@ -1,0 +1,7 @@
+main=>
+    R = 0,
+    foreach (A in 3..1000)
+        R := R + 2*A*((A-1) // 2)
+    end,
+
+    printf("sum of r max = %w", R).

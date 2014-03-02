@@ -1,0 +1,15 @@
+main=>
+    Limit = 10000000000,
+    R = 0,
+    Primes = primes(500000),
+    N = 7037,
+
+    while (R < Limit)
+        N := N+2,
+        P := Primes[N],
+        R := 2 * P * N
+    end,
+
+    printf("The least value of n = %w", N).
+
+

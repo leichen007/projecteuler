@@ -1,0 +1,30 @@
+main=>
+    P=[2,3,5,7,11,13,17,19,23,29,31],
+
+    %R1=47547,
+    %N=10,
+    
+    foreach (N1 in 1..9) 
+        cute(N1,N1,1,P)
+    end.
+    
+cute(S,R,E,P)=>
+   J=0,
+   if (R>=47547) then
+       if (R==47547) then
+           R := 2,
+           J:=0,
+           while (S!==0) 
+               foreach (I in S//E..-1..1) 
+                   R := R*P[J+1]
+               end,
+               S:=S-S//E*E,E := E//10,
+               J := J+1
+           end,
+           printf("%w\n",R)
+       end
+   else
+       foreach (I in 1..S mod 10)
+           cute(S*10+I,R+2*R*I+I,E*10,P)
+       end
+   end.

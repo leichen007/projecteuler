@@ -1,0 +1,46 @@
+main=>
+    Result = 0,
+    XA = 0.0,
+    YA = 10.1,
+
+    XO = 1.4,
+    YO = -9.6,
+
+    while(XO > 0.01 || XO < -0.01 || YO < 0)
+        %Calculate the slope of A
+        SlopeA := (YO - YA) / (XO - XA),
+
+        %Calculate the slope of the ellipse tangent
+        SlopeO := -4*XO/YO,
+
+        %Calculate the slope of B
+        TanA := (SlopeA - SlopeO)/(1+SlopeA*SlopeO),
+        SlopeB := (SlopeO- TanA)/ (1+ TanA*SlopeO),
+
+        %calculate intercept of line B
+        InterceptB := YO - SlopeB * XO,
+
+        %solve the quadratic equation for finding the intersection of B and the ellipse
+        % a*x^2 + b*x + c = 0
+        A := 4 + SlopeB*SlopeB,
+        B := 2 * SlopeB * InterceptB,
+        C := InterceptB * InterceptB - 100,
+
+        Ans1 := (-B + sqrt(B * B - 4 * A * C)) / (2 * A),
+        Ans2 := (-B - sqrt(B * B - 4 * A * C)) / (2 * A),
+
+        XA := XO,
+        YA := YO,
+
+        %Take the solution which is furtherst from x0
+        if (abs(Ans1 - XO) > abs(Ans2 - XO)) then
+            XO := Ans1
+        else
+            XO := Ans2
+        end,
+        %XO := (abs(Ans1 - XO) > abs(Ans2 - XO)) ? Ans1 : Ans2,
+        YO := SlopeB * XO + InterceptB,
+        Result := Result+1
+    end,
+
+    printf("The number of bounces is: %w", Result).

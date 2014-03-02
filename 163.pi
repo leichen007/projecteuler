@@ -1,0 +1,10 @@
+main=>
+    S=36,
+    X1 = ( 1678*pow(S,3)
+       +3117*pow(S,2)
+       +88*S-345*(S mod 2)
+       -320*(S mod 3)
+       -90*(S mod 4)
+       -288*(to_integer((pow(S,3)
+       -pow(S,2)+S)) mod 5) )//240,
+    printf("%w",X1).

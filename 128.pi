@@ -1,0 +1,23 @@
+main=>
+    Count = 1,
+    Limit = 2000,
+    N = 0,
+    Number = 0,
+    F = 3,
+
+    while (F>2, Count < Limit)
+        N := N+1,
+        if (prime(6 * N- 1) && prime(6 * N + 1) && prime(12 * N + 5)) then
+            Count := Count+1,
+            Number := 3 * N * N - 3*N + 2,
+            if (Count >= Limit) then
+                F := 0
+            end
+        end,
+        if (prime(6 * N + 5) && prime(6 * N - 1) && prime(12 * N - 7) && N !== 1) then
+            Count := Count+1,
+            Number := (3 * N * N + 3*N + 1)
+        end
+    end,
+
+    printf("The %wth number is %w", Limit,  Number).

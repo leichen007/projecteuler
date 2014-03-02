@@ -1,0 +1,40 @@
+main=>
+    %Generate the generator polynomial
+    Coefficients = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1],
+
+    %Generate the points
+    Y = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    foreach (I in 1..length(Y))
+        Y[I] := polyevaluate(Coefficients, I)  %csharp: i+1
+    end,
+
+    Fits = 0,
+    foreach (N in 2..length(Coefficients)) %from 2 or 1?
+        Result := 0,
+        foreach(I in 2..N)   %from 2 or 1?
+            Temp1 := 1,
+            Temp2 := 1,
+            foreach (J in 2..N) %range, the same to I
+                if I !== J then
+                    Temp1 := Temp1 * (N + 1 - J),
+                    Temp2 := Temp2 * (I - J)
+                end
+            end,
+            Result := Result + Temp1*Y[I-1]//Temp2
+        end,
+
+        Fits := Fits + Result
+    end,
+    
+    printf("The sum of FITs is %w", Fits).
+
+
+polyevaluate(Coefficients, Ind)=Rtn =>
+    Degree = length(Coefficients),
+    Result = 0,
+
+    foreach (I in Degree..-1..1)
+        Result := Result * Ind + Coefficients[I]
+    end, 
+    Rtn=Result.    
+    

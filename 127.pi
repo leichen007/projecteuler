@@ -1,0 +1,45 @@
+main=>
+    Result = 0,
+    Limit = 120000,
+
+    Radicals = new_list(Limit),
+    foreach (I in 1..Radicals.length)
+        Radicals[I] := [1,I]  %  1 is rad; i is n
+    end,
+
+    foreach (I in 2..Limit)
+        if (Radicals[I,1] == 1) then
+            Radicals[I,1] := I,
+            J := I+I,
+            while (J < Limit+1)
+                Radicals[J,1] := Radicals[J,1]*I,
+                J := J+I
+            end
+        end
+    end,
+    
+    SortedRadicals := sort(Radicals),
+    
+    
+    F = 3,
+    foreach (F>0, C in 3..Limit)
+        Radc := Radicals[C,1],
+        Chalf := C // 2,
+        F := 3,
+        foreach (Item in SortedRadicals, F>2)
+            if (Item[1] * Radicals[C,1] > Chalf) then
+                F := 1
+            end,
+            if (Item[2] < Chalf, F>2) then
+		            B := C - Item[2],
+		            if (Item[1] * Radicals[B,1] * Radc < C && gcd(Item[1], Radicals[B,1])== 1) then
+		                Result := Result + C
+		            end
+		        end
+        end
+    end,
+    
+    gcd(A,0)=A.
+    gcd(A,B)=Rtn, B>0 =>
+        Rtn=gcd(B, A mod B).
+    

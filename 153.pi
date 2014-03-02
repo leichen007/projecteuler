@@ -1,0 +1,31 @@
+main=>
+    X = s(100000000),
+    printf("%w", X).
+
+  gcd(A, B)=Rtn =>
+    Rtn = cond( B==0, A, gcd(B, A mod B) ).
+
+    s(N)=Rtn =>
+        Sum=0,
+        foreach(I in 1..N)
+            Sum := Sum + (N//I)*I
+            %printf("%w", Sum),
+            %XX := read_char()
+        end,
+
+        foreach(A in 1..to_integer(sqrt(N)))
+            foreach(B in 1..A)
+                if(gcd(A,B)==1) then
+                    I := (A*A+B*B),
+
+                    Val := cond( (A==B),(A+B),2*(A+B) ),
+                    foreach(J in 1..N)
+                        Sum := Sum + (J*Val*(N//(I*J)))
+                        %printf("%w", Sum),
+                        %XX := read_char()
+                    end
+                end
+            end
+        end,
+        Rtn = Sum.
+

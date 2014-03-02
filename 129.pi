@@ -1,0 +1,31 @@
+main=>
+    Limit = 1000001,
+    N = Limit,
+
+    while (a(N) < Limit)
+        N := N+2
+    end,
+
+    printf("The least value of n A(N) which first exceeds one-million %w", N).
+
+    a(N)= Rtn =>
+        Rtn1=0,
+        if (gcd(N, 10) == 1) then
+            X = 1,
+            K = 1,
+
+            while (X !== 0)
+                X := (X * 10 + 1) mod N,
+                K := K+1
+            end,
+
+            Rtn1 := K
+         end,
+         Rtn = Rtn1.
+
+    gcd(A, B)=Rtn =>
+        if b==0 then
+            Rtn = a
+        else
+            Rtn = gcd(B, A mod B)
+        end.

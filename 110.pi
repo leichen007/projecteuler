@@ -1,0 +1,72 @@
+main=>
+   Primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43],
+   Exponents = [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+   Result = 1,
+   foreach(I in 1..length(Primes))
+      Result := Result*Primes[I]  %result is th integer has ...divisors
+   end,
+
+   Limit = 2*4000000-1,   %2*4000000-1    2*1000-1  and  2*100-1 are OK
+   Counter = 2,
+   Flag = 1,
+    while (Flag == 1) 
+        twos(Limit, Exponents),
+
+        if Exponents[1] < Exponents[2] then
+            Counter := Counter+1                 
+        else
+            Number1 := number(Primes, Result, Exponents),
+            if Number1 < Result then
+                Result := Number1
+            end, 
+            Counter := 2
+        end,
+        if Counter > length(Exponents) then
+            Flag := 0
+        else
+		        Exponents[Counter] := Exponents[Counter]+1,
+		        setAllSmallerExponents(Counter, Exponents)
+        end
+    end,
+    printf("The first n with more than %w solutions is %w " ,(Limit+1) // 2, Result).
+    
+    twos(Limit, Exponents) =>      %limit = D(n*n) = 4000000*2-1
+        Exponents[1] := 0,
+        Divisors = 1,
+
+        foreach (I in 1..length(Exponents))
+            Xe := 2*Exponents[I]+1,
+            Divisors := Divisors*Xe
+        end, 
+        X = Limit // Divisors,
+        Exponents[1] := (X - 1) // 2,
+        while (Divisors*(2*Exponents[1]+1) < Limit)
+            Exponents[1] := Exponents[1]+1
+        end.
+        %write(Exponents).
+        
+	  number(Primes, Result, Exponents) =Rtn =>
+	      Number = 1,
+	      Flag = 1,
+	      foreach (I in 1..length(Exponents), Flag==1)
+	          if Exponents[I] == 0 then
+	              Flag := 0
+	          else
+	              if Exponents[I]<100 then
+			              Number := Number*pow(Primes[I], Exponents[I])
+			          else
+			              Number := Result+1
+			          end,
+			          
+			          if Result < Number then
+			              Number := Result+1,
+			              Flag := 0
+			          end
+		        end
+	      end, 
+	      Rtn = Number.
+
+    setAllSmallerExponents(Counter, Exponents) =>
+        foreach (I in 1..Counter-1) 
+            Exponents[I] := Exponents[Counter]
+        end.

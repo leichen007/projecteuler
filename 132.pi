@@ -1,0 +1,29 @@
+main=>
+    Result = 0,
+    Count = 0,
+    Primes = primes(200000),
+    K = pow(10, 9),
+    I = 1,
+
+    while(Count < 40)
+        if (mod_power(10, K, 9*Primes[I]) == 1) then
+            Count := Count + 1,
+            Result := Result + Primes[I]
+        end,
+        I := I+1
+    end,
+    printf("Sum of the first forty prime factors of R(10^9): %d", Result).
+
+% calcul a^n % mod
+mod_power(A, N, Mod)=Rtn =>
+    Power = A,
+    Result = 1,
+
+    while (N!==0)
+        if ((N/\1) !== 0) then
+            Result := (Result * Power) mod Mod
+        end,
+        Power := (Power * Power) mod Mod,
+        N := N>>1
+    end,
+    Rtn = Result.

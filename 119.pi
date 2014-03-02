@@ -1,0 +1,37 @@
+main=>
+    A=new_list(51),
+    Index = 0,
+    F=5,
+    Value = 0,
+    
+    foreach (B in 2..399, F>1)
+        Value := B,
+        foreach (E in 2..49, F>3)
+            Value := Value * B,
+
+            if (digitSum(Value) == B) then
+                Index := Index +1,   % why putting this statement in the end has some problem while index=1 (initialization)
+                A[Index] := Value
+                
+            end,
+            if (Index > 50) then
+                F := 2
+            end
+        end,
+        if (Index > 50) then
+            F := 0
+        end
+    end,
+
+    A := sort(A),
+    %writeln(A),
+    printf("a30 is %w", A[30]).
+    
+	  digitSum(N)=Rtn =>
+	      Sum = 0,
+	      while (N > 0)
+	          Sum := Sum + N mod 10,
+	          N := N // 10
+	      end,
+	
+	      Rtn = Sum.

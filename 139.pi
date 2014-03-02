@@ -1,0 +1,18 @@
+main=>
+    Result = 0,
+    Limit = 100000000,
+
+    X = 1,
+    Y = 1,
+
+    while(X+Y < Limit)
+        Xnew := 3 * X + 4 * Y,
+        Ynew := 2 * X + 3 * Y,
+
+        X := Xnew,
+        Y := Ynew,
+
+        Result := Result + Limit // (X + Y)
+    end,
+
+    printf("Number of squares less than 100000000 : %w", Result).

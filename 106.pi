@@ -1,0 +1,42 @@
+main =>
+  Result = 0,
+  %N = 12,
+  X1 = 0,
+  X2 = 0,
+  Ch1 = 1,
+  Ch2 = 1,
+  Ch3 = 1,
+  Ch4 = 1,
+  foreach(I in 2..6)
+      X1 := 12-I,
+      X2 := I*2,
+      Ch1 := choose(12, I),
+      Ch2 := choose(X1, I),
+      Ch3 := choose(12, X2),
+      Ch4 := catalanNumber(I),
+      Result := Result + Ch1*Ch2/2,
+      Result := Result - Ch3*Ch4
+  end,
+  
+  printf("The number of subsets needed to check: %w",to_integer(Result)).
+  
+
+catalanNumber(N) =Ret =>
+    X1=2*N,
+    X2=N+1,
+    X3=choose(X1,N),
+    Ret = X3/X2.
+
+
+choose(N, K1) =Ret =>
+    X2=N-K1,
+    K = min(K1, X2),
+
+    Res = 1,
+    foreach (I in 1..K) 
+        X1 := N-K+I,
+        Res := Res *X1,
+        Res := Res/I
+    end,
+
+    Ret = Res.

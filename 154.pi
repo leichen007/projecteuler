@@ -1,0 +1,64 @@
+main=>
+    N=200000,
+    M=12,
+
+    C2 = new_list(N+1),
+    C5 = new_list(N+1),
+    foreach(I in 1..N+1)
+        C2[I]:=0,
+        C5[I]:=0
+    end,
+    
+    I1=0,J1=0,P=2,Cnt=0,
+    
+    while (P<=N) 
+        J1 := P,
+        while (J1<=N) 
+            C2[J1+1] := C2[J1+1]+1,
+            J1 := J1+P
+        end,
+    P := P*2
+    end,
+    
+    P := 5,
+    while (P<=N) 
+        J1 := P,
+        while (J1<=N) 
+            C5[J1+1] := C5[J1+1]+1,
+            J1 := J1+P
+        end,
+    P := P*5
+    end,            
+            
+    foreach (I in 1..N)
+        C2[I+1] := C2[I+1]+C2[I],
+        C5[I+1] := C5[I+1]+C5[I]
+    end,
+    
+    foreach (I in ((N+2)//3)..N)
+        foreach (J in ((N-I+1)//2)..I, I+J<=N)
+            if ( C5[N+1]-C5[I+1]-C5[J+1]-C5[N-I-J+1]>=M && C2[N+1]-C2[I+1]-C2[J+1]-C2[N-I-J+1]>=M ) then
+                X:=0,Y:=0,Z:=0,
+                if (I==J) then   %X := (I==J)+(I==N-J-I)+(J==N-J-I)
+                    X:=1
+                end,
+                if (I==N-J-I) then
+                    Y:=1
+                end,
+                if (J==N-J-I) then
+                    Z:=1
+                end,
+                
+                K := X + Y + Z,
+                if (K==0) then
+                    Cnt := Cnt+6
+                elseif (K==1) then
+                    Cnt := Cnt+3
+                elseif (K==3) then
+                    Cnt := Cnt+1
+                end
+            end
+        end
+    end,
+    
+    printf("%w\n",Cnt).

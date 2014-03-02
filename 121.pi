@@ -1,0 +1,31 @@
+main=>
+    Limit = 15,
+    Outcomes = new_list(Limit+1),
+    foreach(K in 1..16)
+        Outcomes[K] := 0
+    end,
+    Outcomes[Limit+1] := 1,
+    Outcomes[Limit] := 1,
+
+    foreach (I in 2..Limit)
+        foreach(J in 0..Outcomes.length-2)
+            Outcomes[J+1] := Outcomes[J+2]
+        end,
+        Outcomes[Limit+1] := 0,
+
+        foreach (J in Outcomes.length-1..-1..1)
+            Outcomes[J+1] := Outcomes[J+1] + Outcomes[J] * I
+        end
+    end,
+
+    Positive = 0,
+    foreach (I in 0..Limit // 2+1-1)
+        Positive := Positive + Outcomes[I+1]
+    end,
+
+    Total = 1,
+    foreach (I in 2..Limit + 2-1)
+        Total := Total*I
+    end,
+
+    printf("This gives a prize allocation of %w", Total//Positive).

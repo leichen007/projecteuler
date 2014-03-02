@@ -1,0 +1,25 @@
+main=>
+    N = 1000000,  %1000000  1155
+    Solutions = new_list(N+1),
+    foreach(I in 1..N+1)
+        Solutions[I] := 0
+    end,
+    Result=0,
+
+    foreach (U in 1..N)
+        V := 1,
+        while(U*V<=N)
+            if ( (U + V) mod 4==0 && 3*V>U && ((3*V-U) mod 4)==0 ) then
+                Solutions[U*V] := Solutions[U*V]+1
+            end,
+            V := V+1
+        end
+    end,
+printf("heererererererere\n"),
+    foreach(I in 1..N+1)
+        if (Solutions[I]==10) then
+            Result := Result+1
+        end
+    end,
+
+    printf("number of values with exactly 10 solutions: %w", Result).

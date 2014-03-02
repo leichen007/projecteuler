@@ -1,0 +1,48 @@
+main=>
+    A=0, B=0, C=0, D=0, E=0, F=0,
+    Solved = 0, %Solved = false;
+    Result = 0,
+    I = 4,
+    while (Solved==0)
+        A := I * I,
+        foreach (J in 3..I-1, Solved==0)
+            C := J * J,
+            F := A - C,
+            if (F > 0 && isSquare(F)==1) then
+                %Kstart := (J mod 2 == 1) ? 1 : 2,
+                if (J mod 2 == 1) then
+                    Kstart:=1
+                else
+                    Kstart:=2
+                end,
+
+                K := Kstart,
+                while (K < J, Solved==0)
+                    D := K * K,
+                    E := A - D,
+                    B := C - E,
+
+                    if (B > 0 && E > 0 && isSquare(B)==1 && isSquare(E)==1 ) then
+                        X := (D + C) // 2,
+                        Y := (E + F) // 2,
+                        Z := (C - D) // 2,
+
+                        Result := X + Y + Z,
+                        Solved := 1
+                    end,
+                    K := K+2
+                end
+            end
+        end,
+        I := I+1
+    end,
+    printf("The smallest x+y+z=%w", Result).
+
+
+isSquare(N)=Rtn =>
+    Root=to_integer(sqrt(N)),
+    if Root*Root==N then
+        Rtn = 1
+    else
+        Rtn = 0
+    end.

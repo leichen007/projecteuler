@@ -1,0 +1,61 @@
+main=>
+    Limit = 1000000,
+    Primes = primes(Limit + 100), %delete 2 and 3
+    Result = 0, P1=0,P2=0,A=0,B=0,N=0,X=0,
+    I = 3,  %delete 2 and 3
+    Rs = new_list(3),
+    Rs[1]:=0,Rs[2]:=0,Rs[3]:=0,
+
+    while (Primes[I] <= Limit)
+        P1 := Primes[I],
+        P2 := Primes[I + 1],
+
+        A := digitCountFactor(P1),
+        B := P2 - P1,
+        N := P2,
+
+        extended_gcd(A,N,Rs),
+        X  := Rs[1] * B mod N,
+
+        if (X < 0) then
+            X := N + X
+        end,
+
+        Result := Result + (X * A + P1),
+        I := I+1
+    end,
+
+    printf("Sum of S: %w", Result).
+
+
+    digitCountFactor(Number)=Rtn =>
+        Factor = 1,
+
+        while (Number > 0)
+            Factor := Factor * 10,
+            Number := Number // 10
+        end,
+
+        Rtn = Factor.
+
+    extended_gcd(A, B, Rs)=>
+        X = 0,
+        Lastx = 1,
+        Y = 1,
+        Lasty = 0,
+        while (B !== 0)
+            Quotient := A // B,
+
+            Temp := B,
+            B := A mod B,
+            A := Temp,
+
+            Temp := X,
+            X := Lastx - Quotient * X,
+            Lastx := Temp,
+
+            Temp := Y,
+            Y := Lasty - Quotient * Y,
+            Lasty := Temp
+        end,
+        Rs[1]:=Lastx,Rs[2]:=Lasty,Rs[3]:=A.

@@ -1,0 +1,13 @@
+main =>
+    B = 15,
+    N = 21,
+    Target = 1000000000000,
+
+    while(N < Target)
+        Btemp := 3 * B + 2 * N - 2,
+        Ntemp := 4 * B + 3 * N - 3,
+
+        B := Btemp,
+        N := Ntemp
+    end,
+    printf("The number of blue discs is: %w",B).

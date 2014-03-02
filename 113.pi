@@ -1,0 +1,20 @@
+main=>
+    Result = choose(100 + 10, 10) + choose(100 +9, 9) - 10 * 100 - 2,
+                          
+    printf("There are %w non-bouncy numbers below 10^100 ", Result).
+    
+    
+    choose(N1, K1)=Rtn =>
+        N = to_integer(N1),
+        K = to_integer(K1),
+        if K>N-K then
+            K:=N-K
+        end,
+        Res = 1,
+        foreach (I in 1..K) 
+            Res := Res * (N - K + I),
+            Res := Res//I
+        end,
+        %printf("%w\n",Res),
+        Rtn = Res.
+    

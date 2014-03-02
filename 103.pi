@@ -1,0 +1,101 @@
+main =>
+	 A = [20, 31, 38, 39, 40, 42, 45],
+   C = [-3,-3,-3,-3,-3,-3,-3],
+	 Min = -3,
+   Max = 3,
+	 Result = new_list(7),
+
+	 S = new_list(128),
+	 T = new_list(7),
+	
+   Tsum = 0,
+   Tmin = 300,
+  
+   foreach(I in 1..823543)%823543
+       foreach (J in 1..7)
+          T[J] := A[J] + C[J]
+       end,
+       
+       Tsum := sum(T),%%%%%%%%%%%%%%%%
+       
+       if Tsum <= Tmin then  %first check optimum: 
+           T := sort(T),
+           Rule2 := verifyRule2(T),
+           if Rule2==1 then  %second check rule2 >
+              foreach (K in 2..128)%128
+          		   S[K] := makeSubsetSum(T, K)
+              end,
+              Rule1 := verifyRule1(S),
+              if Rule1==1 then  %Third check rule1 =
+                 Tmin := Tsum,
+                 
+                 %Issue: replaced by Result := T,
+                 foreach( Item in 1..length(T) )   %the later, the smaller
+                    Result[Item] := T[Item]
+                 end
+              end
+           end
+       end,
+       updatePertubationVector(C, Min, Max)
+   end,
+	 printf("The optimum sss string is: "),
+	 foreach(Item in Result)
+	     writef("%d",Item)
+	 end.
+       
+
+           
+% A is in ascending sort
+verifyRule2(A) =Ret =>
+     Ret1 =1,F = 3,
+     Sum1 = A[1],
+     Sum2 = 0,
+     Len = length(A),
+     foreach(I in 1..Len//2, F>2)
+         Sum1 := Sum1+A[I+1],
+         Sum2 := Sum2+A[Len-I+1],
+         if Sum1<=Sum2 then
+            Ret1 := 0,
+            F := 0
+         end
+     end,
+     Ret = Ret1.
+     
+makeSubsetSum(SortT, M) =H =>
+    Sum = 0,
+    Len = length(SortT),
+    foreach (I in 1..Len)
+       if (M/\1) == 1 then
+           Sum := Sum+SortT[I]
+       end,
+       M := M>>1
+    end,
+    H = Sum.
+    
+verifyRule1(A) =Ret =>
+    Ret1 = 1,
+    F = 3,
+    Len = length(A),
+    foreach(I in 1..Len,F>2)
+	     foreach(J in I+1..Len)
+	         if A[I]==A[J],(I/\J)==0 then
+              %printf("I: %d, J: %d\n", I, J),
+              Ret1 := 0,
+              F := 0
+	         end
+	     end
+    end,
+    Ret = Ret1.
+
+updatePertubationVector(C, Min, Max) =>
+   F = 3,
+   Len = length(C),
+   foreach(I in Len..-1..1, F>2)
+      if C[I] !== Max then   %skip the max number after I, I+=1, then set all max elements to min 
+         foreach(J in I+1..Len,J<=Len)
+            C[J] := Min
+         end,
+         C[I] := C[I] + 1,
+         F := 0
+      end
+   end.

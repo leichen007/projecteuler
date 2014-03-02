@@ -1,0 +1,37 @@
+main=>
+    I = 99,
+    Bouncies = 0,
+
+    while (100 * Bouncies < 99 * I)
+        I := I+1,
+        if isBouncy(I)==1 then
+            Bouncies := Bouncies+1
+        end
+    end,
+
+    printf("We reach %%99 at %w ", I).
+    
+    isBouncy(Number1)=Rtn =>
+        Inc = fail,
+        Dec = fail,
+        Number = Number1.to_integer(),
+        Last = Number mod 10,
+        Number := Number//10,
+
+        while (Number > 0)
+            Next := Number mod 10,
+            Number := Number//10,
+            if Next < Last then
+                Inc := true
+            elseif Next > Last then
+                Dec := true
+            end,
+
+            Last := Next
+        end,
+        
+        if Inc && Dec then
+            Rtn=1
+        else
+            Rtn=0
+        end.

@@ -1,0 +1,131 @@
+main=>
+    Number = [0,0,0,0,0,0,0,0,0,0],
+    F=3,
+    Result = 0,
+    foreach(D in 0..9)
+        F := 3,
+        foreach (Pos in 1..length(Number))
+            Number[Pos] := D
+        end,
+        foreach (I in 1..9,F>1)
+            Sum := recurse(D, 0, I, Number),
+            if Sum>0 then
+                Result :=  Result+Sum,
+                F := 0
+            end
+        end
+    end,
+
+    printf("S(10,d) = %w", Result).
+    
+    
+    recurse(Basedigit, Startpos, Level, Number)=Rtn =>
+        Rtn1 = 0,
+        if Level <= 0 then
+            Rtn1 := checkNumber(Number)
+        else
+            Res = 0,
+
+            foreach (Pos in Startpos..length(Number)-1)
+                foreach (Val in 0..9)
+                    Number[Pos+1] := Val,
+                    X := recurse(Basedigit, Pos + 1, Level - 1, Number),
+                    Res := Res + X
+                end,
+                Number[Pos+1] := Basedigit
+            end,
+            Rtn1 := Res
+         end,
+         Rtn = Rtn1.
+        
+    checkNumber(Number)=Rtn =>
+        Rtn1 = 0,
+        
+        if Number[1] == 0 then
+            Rtn1 := 0
+        else
+            N = 0,
+            foreach(I in 1..length(Number))
+                N := N*10 + Number[I]
+            end,
+            %L=[2, 3, 5, 7, 11],
+            if isprime(N) then    %isProbablePrime(N,L)==1
+                %printf("%w\n",N),%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+                Rtn1 := N
+            end
+        end,
+        Rtn=Rtn1.
+
+
+isprime(N),N<2 => false.
+isprime(2) => true.
+isprime(3) => true.
+isprime(N),(N/\1)==0, N !==2 => false.
+isprime(N),N mod 3 == 0, N !==3 => false.
+isprime(N) =>
+    S = 0,
+    D = N - 1,
+    while ((D /\ 1) == 0)   %find N-1 = 2^s * d by bitwise operation
+        S := S+1,
+        D := D>>1
+    end,
+    if (N < 1373653) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 3)==1
+    elseif (N < 9080191) then
+        witness(N, S, D, 31)==1 && witness(N, S, D, 73)==1
+    elseif (N < 4759123141) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 7)==1 && witness(N, S, D, 61)==1
+    elseif (N < 1122004669633) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 13)==1 && witness(N, S, D, 23)==1 && witness(N, S, D, 1662803)==1
+    elseif (N < 2152302898747) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 3)==1 && witness(N, S, D, 5)==1 && witness(N, S, D, 7)==1 && witness(N, S, D, 11)==1
+    elseif (N < 3474749660383) then
+        witness(N, S, D, 2)==1 && witness(N, S, D, 3)==1 && witness(N, S, D, 5)==1 && witness(N, S, D, 7)==1 && witness(N, S, D, 11)==1 && witness(N, S, D, 13)==1
+    else
+        witness(N, S, D, 2)==1 && witness(N, S, D, 3)==1 && witness(N, S, D, 5)==1 && witness(N, S, D, 7)==1 && witness(N, S, D, 11)==1 && witness(N, S, D, 13)==1 && witness(N, S, D, 17)==1
+    end.
+
+
+
+% n-1 = 2^s * d with d odd by factoring powers of 2 from n-1
+% return false: is composite number;  return true: is prime number
+witness(N, S, D, A)=Rtn =>
+    Rtn1 = 0,
+    %X = (A ** D) mod N,
+    X = mod_power(A,D,N),
+    Y = 0,
+    F1 =3,
+ 
+    while (S !==0) 
+        Y := (X * X) mod N,
+        if (Y == 1 && X !==1 && X!== N-1) then
+            F1 := 0   %return
+        end, 
+        if F1 !==0 then
+            X := Y,
+            S := S-1
+        end
+    end,
+    
+    if (F1 !== 0) then
+        if (Y !== 1) then
+            F1 := 2
+        end,
+        if F1 !== 2 then
+            Rtn1 := 1
+        end
+    end,
+    Rtn = Rtn1.
+    
+mod_power(A, N, Mod)=Rtn =>
+    Power = A,
+    Result = 1,
+
+    while (N!==0)
+        if ((N/\1) !== 0) then
+            Result := (Result * Power) mod Mod
+        end,
+        Power := (Power * Power) mod Mod,
+        N := N>>1
+    end,
+    Rtn = Result.    

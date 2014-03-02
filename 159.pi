@@ -1,0 +1,32 @@
+main=>
+    MAXN = 1000*1000,
+    
+    Drs = new_list(MAXN), Sum=0,
+    /*foreach(I in 1..MAXN)
+        Drs[I] := 0
+    end,*/
+    Drs[1] := 0, Drs[2] := 0,
+    printf("gggggggggggg"),
+    foreach (I in 2..MAXN-1)
+        Drs[I+1] := (I - 1) mod 9 + 1
+    end,
+    printf("22222222222222222222"),
+    foreach (I in 1..MAXN-1)         
+        N := I+I,
+        
+        foreach (K in 2..I , N < MAXN)
+            XX := Drs[I+1] + Drs[K+1],
+            if (Drs[N+1]>XX) then
+                Drs[N+1] := Drs[N+1]
+            else
+                Drs[N+1] := Drs[I+1] + Drs[K+1]
+            end,
+            N := N+I,
+            printf("111111111111111")
+        end,
+            
+        Sum := Sum + Drs[I]
+    end,
+    
+    printf("Answer : %d\n", Sum).
+    

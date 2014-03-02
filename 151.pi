@@ -1,0 +1,43 @@
+main=>
+    printf("%.6f", i(1, 1, 1, 1)).
+
+i(A2, A3, A4, A5)=Rtn =>
+    T = A2+A3+A4+A5,
+    E=0,F=3,
+
+    if (T==1 && A5!==0) then
+        F := 0
+    end,
+
+    if (F!==0) then
+        if(T == 1) then
+            E := 1
+        else
+            E := 0
+        end,
+
+        if(A2 !== 0) then
+            E := E + A2 * i(A2-1, A3+1, A4+1, A5+1)
+        end,
+
+        if(A3 !== 0) then
+            E := E + A3 * i(A2, A3-1, A4+1, A5+1)
+        end,
+
+        if(A4 !== 0) then
+            E := E + A4 * i(A2, A3, A4-1, A5+1)
+        end,
+
+        if(A5 !== 0) then
+            E := E + A5 * i(A2, A3, A4, A5-1)
+        end,
+
+        E := E/T
+    end,
+
+    if (F==0) then
+        Rtn = 0
+    else
+        Rtn = E
+    end.
+

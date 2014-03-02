@@ -1,0 +1,39 @@
+main=>
+    printf("%w\n", search(0, 18, 1) // 10 * 9).
+    
+search(D1, Left, Curv)=Rtn =>
+    Rtn1=0,
+    Val = 0,
+    if (Left < 0 || (10 - D1) * 3 < Left) then
+        Rtn1 := 0
+    elseif (D1==10) then
+        if Left==0 then
+            Rtn1 := Curv
+        else
+            Rtn1 := 0
+        end
+    else
+		    foreach (I in 0..3)
+		        Val := Val + search(D1 + 1, Left - I, Curv * comb(Left, I))
+		    end,
+		    Rtn1 := Val
+		end,
+		
+		Rtn=Rtn1.
+
+comb(N, R)=Rtn =>
+    Rtn1=0,
+    
+    if (R==0) then
+        Rtn1 := 1
+    elseif (R==1) then
+        Rtn1 := N
+    elseif (R==2) then
+        Rtn1 := N * (N - 1) // 2
+    elseif (R==3) then
+        Rtn1 := N * (N - 1) * (N - 2) // 6
+    else
+        Rtn1 := 0
+    end,
+    
+    Rtn = Rtn1.    
