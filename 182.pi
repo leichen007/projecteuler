@@ -1,0 +1,40 @@
+/*
+#include <stdio.h>
+
+#define P 1009
+#define Q 3643
+#define F (P-1)*(Q-1)
+
+int gcd(int a,int b) {
+    int c;
+    while (b) c=b,b=a%b,a=c;
+    return a;
+}
+
+int main() {
+    long long e,sum=0;
+    for (e=3;e<F;e+=2)
+        if (gcd(e,F)==1&&(gcd(e-1,P-1)+1)*(gcd(e-1,Q-1)+1)==9) 
+            sum+=e;
+    printf("%lli\n",sum);
+    return 0;
+}
+*/
+main=>
+    P = 1009,
+    Q = 3643,
+    F = (P-1)*(Q-1),
+    
+    E=3,Sum=0,
+    
+    while (E<F)
+        if (gcd(E,F)==1&&(gcd(E-1,P-1)+1)*(gcd(E-1,Q-1)+1)==9) then
+            Sum := Sum+E
+        end,
+        E := E+2
+    end,
+    printf("%w\n",Sum). 
+
+
+gcd(A, B)=Rtn =>
+    Rtn = cond(B==0,A,gcd(B, A mod B)).
