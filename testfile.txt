@@ -4,10 +4,3 @@ teset git reset command
 test git revert
 
 
-revert111
-revert555
-revert666
-revert777
-revert888
-
-222222
