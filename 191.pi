@@ -1,0 +1,52 @@
+/*
+Here's a slightly different DP approach where we compute the number f(n) of bit-strings of length n that avoid "000". Using that, we iterate over all possible positions for 'L'.
+The following computes the solution in 3ms.
+
+#include <iostream>
+
+using namespace std;
+
+#define LIM     30
+
+uint64_t f[2][LIM+1];
+
+uint64_t calc(int n, int d = 1)
+{
+  if(n==1)    return 2;
+  if(n<1)     return 1;
+  if(f[d][n]) return f[d][n];
+  return f[d][n] = calc(n-1, 1) + calc(n-2+d, 1-d);
+}
+ 
+int main(int argc, char **argv)
+{
+  uint64_t sum = calc(LIM);
+  for(int pos = 0; pos < LIM; pos++)
+    sum += calc(pos)*calc(LIM-1-pos);
+  cout << sum << endl;
+}
+*/
+main=>
+    LIM=30,
+    F={{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}},
+
+    Sum = calc(LIM,1,F),
+    foreach(Pos in 0..LIM-1)
+        Sum := Sum + calc(Pos,1,F)*calc(LIM-1-Pos,1,F)
+    end,
+    
+    printf("%w",Sum).
+
+%int n, int d = 1
+calc(N,D,F)=Rtn =>
+  if(N==1) then    
+      Rtn = 2
+  elseif(N<1) then     
+      Rtn = 1
+  elseif( F[D+1,N+1]!==0 ) then 
+      Rtn = F[D+1,N+1]
+  else  
+      F[D+1,N+1] := calc(N-1, 1,F) + calc(N-2+D, 1-D,F),
+      Rtn = F[D+1,N+1]
+  end.

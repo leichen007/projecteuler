@@ -1,0 +1,51 @@
+/*
+Lagrange theory about parallel gradients for the function P and and the constraint m=x1+..+xm, gives the max value for x1=x2/2=x3/3=..=xm/m. 
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+long long P(int m);
+
+int main() {
+   long long sum=0;
+   for(int m=2;m<=15;m++){//  int m=10;
+   	  long long temp=P(m);
+      sum+=temp;
+      //cout<<sum<<"  "<<temp<<"\n"<<endl;
+   }
+   cout << sum << endl;
+}
+
+long long P(int m) {
+   double ans=1;
+   for(int i=1;i<=m;i++) {
+   	  double p1=pow(2*i,i);
+   	  double p2=pow(m+1,i);
+   	  //cout<<p1<<"   "<<p2<<"   "<<p1/p2<<endl;
+      ans*=p1/p2;
+   }
+   //cout<<ans<<"   p(m)"<<endl;
+   return ans;
+}
+*/
+main=>
+    Sum=0,      %bug:  pow(11,10)
+    foreach(M in 2..15) 
+        Temp := p1(M),
+        Sum := Sum + Temp
+        %printf("%w\n\n",Temp),
+    end,
+    printf("%w",Sum).
+
+
+p1(M)=Rtn =>
+   Ans=1,
+   foreach(I in 1..M)
+      Pow1:=pow(2*I,I),
+      Pow2:=pow(M+1,I),
+      %printf("%w  %w  %w\n",Pow1,Pow2,Pow1/Pow2),
+      Ans := Ans*( Pow1/Pow2 )
+   end,
+   %printf("%w\n",Ans),
+   Rtn = to_integer(Ans).

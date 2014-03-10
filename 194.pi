@@ -1,0 +1,73 @@
+/*
+#include <iostream>
+
+using namespace std;
+
+const int MOD=100000000;
+long long pow_mod(int b,int e,int m);
+int G_a(int c);
+int G_b(int c);
+
+int main()
+{
+    cout << (((21015504LL*1984*1983)%MOD)*((pow_mod(G_a(1984),25,MOD)*pow_mod(G_b(1984),75,MOD))%MOD))%MOD << endl;
+}
+
+long long pow_mod(int b,int e,int m) {
+    long long ans=1;
+    while((--e)>-1) {
+        ans*=b;
+        ans=ans%m;
+    }
+    return ans;
+}
+
+int G_a(int c) {
+    if(c==3) {
+        return 4;
+    }
+    return (pow_mod(c,5,MOD)-9*pow_mod(c,4,MOD)+34*pow_mod(c,3,MOD)-69*pow_mod(c,2,MOD)+77*c-38)%MOD;
+}
+
+int G_b(int c) {
+    if(c==3) {
+        return 6;
+    }
+    return (pow_mod(c,5,MOD)-8*pow_mod(c,4,MOD)+27*pow_mod(c,3,MOD)-50*pow_mod(c,2,MOD)+52*c-24)%MOD;
+}
+*/
+main=>
+    MOD=100000000,
+    X = (((21015504*1984*1983) mod MOD)*((pow_mod(g_a(1984),25,MOD)*pow_mod(g_b(1984),75,MOD)) mod MOD)) mod MOD,
+    
+    printf("%w",X).
+    
+pow_mod(B,E,M)=Rtn => 
+    Ans=1,
+    E1 = E-1,
+    
+    while(E1 > -1)
+        Ans := Ans*B,
+        Ans := Ans mod M,
+        E1 := E1 - 1
+    end,
+    
+    Rtn = Ans.
+    
+g_a(C)=Rtn =>
+    MOD=100000000,
+    if(C==3) then
+        Rtn = 4
+    else
+        Rtn = (pow_mod(C,5,MOD)-9*pow_mod(C,4,MOD)+34*pow_mod(C,3,MOD)-69*pow_mod(C,2,MOD)+77*C-38) mod MOD
+    end.
+    
+
+
+g_b(C)=Rtn =>
+    MOD=100000000,
+    if(C==3) then
+        Rtn = 6
+    else
+        Rtn = (pow_mod(C,5,MOD)-8*pow_mod(C,4,MOD)+27*pow_mod(C,3,MOD)-50*pow_mod(C,2,MOD)+52*C-24) mod MOD
+    end.

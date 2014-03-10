@@ -1,0 +1,67 @@
+/*
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+double N_limit(double k);
+int D(int N,int k);
+
+int main() {
+   long long sum=0;
+   for(int N=5;N<10001;N++) {
+      int k=N/exp(1);
+      if(N<N_limit(k)) {
+         sum+=D(N,k);
+      }
+      else {
+         sum+=D(N,k+1);
+      }
+   }
+   cout << sum << endl;
+}
+
+double N_limit(double k) {
+    return (k+1)*pow((k+1)/k,k);
+}
+int D(int N,int k) {
+   while(k%2==0) {
+      k/=2;
+   }
+   while(k%5==0) {
+      k/=5;
+   }
+   if(N%k==0) {
+      return -N;
+   }
+   return N;
+}
+*/
+main=>
+    Sum=0, K=0,
+    foreach(N in 5..10000) 
+        K := to_integer(N/2.71828),
+        if(N<n_limit(K)) then
+            Sum := Sum+df(N,K)
+        else
+            Sum := Sum+df(N,K+1)
+        end
+    end,
+    printf("%w",Sum).
+   
+n_limit(K)=Rtn =>  
+    Rtn = (K+1)*pow((K+1)/K,K).
+
+
+df(N,K)=Rtn =>
+    while(K mod 2==0) 
+        K := K//2
+    end,
+    while(K mod 5==0) 
+        K := K//5
+    end,
+    if(N mod K==0) then 
+        Rtn = -N
+    else
+        Rtn = N
+    end.

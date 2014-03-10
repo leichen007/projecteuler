@@ -1,0 +1,72 @@
+/*
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int main(void) {
+    unsigned long long int num = 0, sum = 0, c;
+    //unsigned int x, xx, y, ya, r = 105, rr = r*r, rr2 = rr*2, rr4 = rr*4, h = r+r-2;
+    unsigned int x, xx, y, ya, r = 105, rr = 11025, rr2 = 22050, rr4 = 44100, h = 208;
+    //Xx=0, Y=0, Ya=0, R = 105, Rr = 11025, Rr2 = 22050, Rr4 = 44100, H = 208,
+    
+    printf("%f\n", M_PI);
+    //unsigned int *angles = calloc(2*rr, sizeof(unsigned int));
+    unsigned int angles[22050]={0,};
+    angles[0] = r-1;
+
+    for(x = 1; x < r; ++x) {
+        xx = x*x;
+        for(y = 1, xx++, ya = 1; xx < rr; ++y, ya+=2, xx += ya) {
+            angles[(int) ( atan2(y,x)*rr4/3.141593 ) ]++;
+            h += 2;
+        }
+    }
+
+    for(x = 0; x < rr2; ++x) {
+        if (angles[x]) {
+            c = angles[x] * sum;
+            sum += angles[x];
+            c *= h - sum;
+            num += c;
+        }
+    }
+
+    printf("%llu\n", num*4);
+
+    //free(angles);
+
+    return 0;
+}
+*/
+main=>
+    Num = 0, Sum = 0, C=0,
+    Xx=0, Y=0, Ya=0, R = 105, Rr = 11025, Rr2 = 22050, Rr4 = 44100, H = 208,
+
+    Angles = new_array(22050),
+    foreach(I in 1..22050)
+        Angles[I] := 0
+    end,
+    
+    Angles[1] := R-1,
+    foreach(X in 1..R-1)
+        Xx := X*X,
+        Y := 1, Xx := Xx+1, Ya := 1,
+        while(Xx < Rr) 
+            XXX := (atan2(Y,X) * Rr4/3.141593).to_integer()+1,
+            Angles[XXX] := Angles[XXX] + 1,
+            H := H + 2,
+            
+            Y := Y+1, Ya := Ya+2, Xx := Xx +Ya
+        end
+    end,
+
+    foreach(X in 0..Rr2-1) 
+        if (Angles[X+1] !== 0) then
+            C := Angles[X+1] * Sum,
+            Sum := Sum + Angles[X+1],
+            C := C*(H - Sum),
+            Num := Num + C
+        end
+    end,
+
+    printf("%w\n", Num*4).

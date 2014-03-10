@@ -1,0 +1,121 @@
+/*
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <stdio.h>
+
+using namespace std;
+
+int sieve(int, int*, int*);
+
+int n = 100000000;
+//These are too big to be defined within a function--even Main
+//Nor could I dimension them with variable n
+int primes[100000000], imprime[100000000];
+
+int main()
+{ 
+	clock_t start = clock();
+	
+	for(int j=0; j<n; j++) primes[j] = 1;
+
+  //Generate Primes Using Sieve of Eratosthenes
+  int primecount = sieve(n,primes,imprime);
+  
+  int bigcnt = 0;                  //To hold count of semiprimes
+  int nroot = int(sqrt(n));        
+  for (int j=0; j<primecount; j++) //Outer loop runs to sqrt of n, since
+  { 
+  	if(imprime[j] > nroot)
+  		  break;   //semiprime has 2 factors which can't
+    for(int k=j; k<primecount; k++)//both be > sqrt(n) and itself be < n 
+    { int nextpair = imprime[j]*imprime[k];
+      
+      if(nextpair > n) 
+      	  break;      //Break out of inner loop when #s get toobig
+      bigcnt++;
+      //cout<<bigcnt<<endl;
+       //getchar(); 
+    }
+  }
+  cout << endl << "Found " << bigcnt << " 2-prime integers  in TIME: " 
+       << ( (double)(clock()-start) )/CLOCKS_PER_SEC << endl;
+       
+    return 0;
+}
+
+int sieve(int n, int* primes, int* imprime)
+{ int primecnt = 0;
+  for (int i = 2; i<sqrt(n); i++)
+    if (primes[i] == 1)
+    { int j = i*i, k=2;
+      while(j < n)
+      { primes[j] = 0; 
+        j += i;
+      }
+    }
+  for(int j=2; j<n; j++) 
+    if(primes[j] == 1)
+      imprime[primecnt++] = j;
+  return primecnt;
+}
+
+*/
+main=>
+
+    N = 100000000,
+    Primes = new_array(100000000),
+    Imprime = new_array(100000000),
+    foreach(I in 1..100000000)
+        Primes[I] := 1,
+        Imprime[I] := 0
+    end,
+
+
+  %Generate Primes Using Sieve of Eratosthenes
+  Primecount = sieve(N,Primes,Imprime),
+  
+  Bigcnt = 0,              
+  Nroot = (sqrt(N)).to_integer(),     
+  F = 3,
+  
+  foreach (J in 0..Primecount-1, Imprime[j] <= Nroot)
+
+  	
+    foreach(F>2,K in j..Primecount-1)
+      Nextpair := Imprime[J]*Imprime[K],
+      
+      if(Nextpair > N) then
+      	  F:=1
+      end,
+      if (F >2 ) then
+          %printf("%w",Bigcnt),
+          %XX:=read_char(),
+          Bigcnt := Bigcnt+1
+          
+      end
+    end
+  end,
+  
+  printf("%w", Bigcnt).
+  
+sieve(N, Primes, Imprime)=Rtn =>
+  Primecnt = 0,
+  I = 2,
+  while (I<sqrt(N))
+    if (Primes[I] == 1) then
+     J := I*I, K := 2,
+      while(J < N)
+        Primes[J] := 0, 
+        J := J+I
+      end
+    end,
+    I := I+1
+  end,
+  foreach(J1 in 2..N-1) 
+      if(Primes[J1] == 1) then
+          Imprime[Primecnt] = J,
+          Primecnt := Primecnt+1
+      end
+  end,
+  Rtn = Primecnt.
