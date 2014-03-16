@@ -1,0 +1,43 @@
+/*
+#include <stdio.h>
+
+int main() {
+    int p=0,q=1,u;
+
+    while (1) {
+        u=1+q;
+        while (!(u&1)) 
+			u>>=1;
+        if (u==1) 
+			p++;
+        if (p*12345<q)	
+			break;
+		
+		q++;
+    }
+	
+    printf("%lld\n",(1LL*(2*q+1)*(2*q+1)-1)/4);
+    return 0;
+}
+*/
+main=>
+    P=0,Q=1,U=0,
+	F = 3,
+    while (F>2) 
+		U := 1+Q,
+		while ( (U/\1)==0 )
+			U := U>>1
+		end,
+			
+		if (U==1) then
+			P:=P+1
+		end,
+		if (P*12345<Q) then
+			F := 1
+		end,
+			
+		Q := Q+1
+    end,
+	
+	Q := Q-1,
+    printf("%w\n",(1*(2*Q+1)*(2*Q+1)-1)/4).

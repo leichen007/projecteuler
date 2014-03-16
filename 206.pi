@@ -1,0 +1,51 @@
+/*
+#include "stdio.h"
+
+long long i,j,k,l;
+
+int main()
+{
+ for(i=101010103; i<=138902663;)
+ {
+	  j=i*i;
+	  for(k=9; k>0; k--)
+	  {
+		 l=j%10;
+		 j/=100;
+		 if(k!=l)
+			 break;
+	  }
+	  if(k==0)
+	  {
+		  printf("%lld0\n",i);
+		  return 0;
+	  }
+	  i += (i%10==3) ? 4 : 6;
+ }
+ return(0);
+}
+*/
+main=>
+	J=0,K=0,L=0,
+	I=101010103, F=3, F2=3,
+	while(I<=138902663, F2>2)
+		F := 3,
+		J :=I*I,
+		K := 9,
+		while(K>0, F>2)
+			L := J mod 10,
+			J := J//100,
+			if(K !== L) then
+				F := 1
+			end,
+			if (F>2) then
+				K := K-1
+			end
+		end,
+        
+		if(K==0) then
+			printf("%w0\n",I),
+			F2 := 1
+		end,
+		I := I + cond( (I mod 10==3), 4, 6)
+	end.

@@ -1,0 +1,37 @@
+/*
+#include<stdio.h>
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+#define MAX 10 
+#define PI 3.141592653589793238462
+
+double area(double k1, double k2, double k3, int depth){
+   if(depth > MAX){return 0;}
+   double k4 = k1+k2+k3+2*sqrt(k1*k2+k2*k3+k3*k1); //descartes' theorem
+   return PI/(k4*k4)+area(k1,k2,k4,depth+1)+area(k2,k3,k4,depth+1)+area(k3,k1,k4,depth+1);
+}
+
+int main(){
+   double tot = PI;
+   double initk = 1/(2*sqrt(3)-3);
+   printf("%1.8f\n",1-(3*PI/(initk*initk)+area(initk,initk,initk,1)+3*area(initk,initk,-1,1))/tot);
+   return 0;
+}
+*/
+main=>
+   PI = 3.141592653589793238462,
+   Tot = PI,
+   Initk = 1/(2*sqrt(3)-3),
+   
+   printf("%1.8f\n",1-(3*PI/(Initk*Initk)+area(Initk,Initk,Initk,1)+3*area(Initk,Initk,-1,1))/Tot).
+
+area(K1, K2, K3, Depth)=Rtn =>
+   if(Depth > 10) then
+       Rtn= 0
+   else
+      K4 = K1+K2+K3+2*sqrt(K1*K2+K2*K3+K3*K1),
+      Rtn = 3.141592653589793238462/(K4*K4)+area(K1,K2,K4,Depth+1)+area(K2,K3,K4,Depth+1)+area(K3,K1,K4,Depth+1)
+   end.

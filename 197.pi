@@ -1,0 +1,19 @@
+main=>
+   U={-1,0},
+   
+   F = 3,
+   I = 1,
+
+   while(F==3)
+      U[2] := f(U[1]),
+
+      if(I mod 1000000 == 0) then
+	     F := 2,
+	     printf("%w", U[1]+U[2])
+	  end,
+      U[1] := U[2],
+      I := I+1
+   end.
+   
+f(X)=Rtn =>
+   Rtn = 0.000000001*floor(pow(2,30.403243784-X*X)).

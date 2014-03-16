@@ -1,0 +1,94 @@
+/*
+#include <stdio.h>
+
+#define N 100
+#define M 50
+#define MAXSM 295425
+int c[M + 1][MAXSM + 1];
+int maxs[N + 1];
+
+int main(void)
+{
+    long i, j, k, val = 0;
+    for (i = 1; i <= N; i++) {
+        for (j = i < M ? i - 1 : M - 1; j > 0; j--)
+            for (k = 0; k <= maxs[i - 1]; k++)
+                c[j + 1][k + i * i] += c[j][k];
+        c[1][i * i]++;
+        maxs[i] = maxs[i - 1] + i * i;
+        if (i >= 50)
+            maxs[i] -= (i - 49) * (i - 49);
+    }
+    for (k = 0; k <= MAXSM; k++)
+        if (c[M][k] == 1)
+            val += k;
+    printf("%ld\n", val);
+    return 0;
+}
+*/
+main=>
+    N =100,
+    M =50,
+    MAXSM =295425,
+    C=new_array(M+1),  % C[M + 1][MAXSM + 1],
+	
+    foreach(I in 1..M+1)
+		Aux=new_array(MAXSM + 1),
+        foreach(J in 1..MAXSM + 1)
+			Aux[J] := 0
+        end,
+        C[I] := Aux
+    end,	
+
+    Maxs=new_array(N + 1),  %Maxs[N + 1],
+	
+	foreach(I in 1..N+1)
+	    Maxs[I] := 0
+    end,
+	
+    Val = 0, J=0,
+    foreach (I in 1..N) 
+	    J := cond(I < M, I - 1, M - 1),
+        while(J > 0)
+            foreach (K in 0..Maxs[I-1])
+				%printf("%d %d %d  =====",I,J,K),
+				%printf("C[%d][%d]:%d + C[%d][%d]:%d = ",J+2, K+I*I+1,C[J+2, K+I*I+1], J+1,K+1,C[J+1,K+1]),
+                C[J+2, K+I*I+1] := C[J+2, K+I*I+1] + C[J+1,K+1]
+				%printf("**********%d\n",C[J+2, K+I*I+1]),
+				%printf("C[%d][%d]:%d\n", J+2, K+I*I+1,C[J+2, K+I*I+1]),
+				%X = read_char()
+			end,
+		    J := J-1
+		end,		
+        C[2, I*I+1] := C[2, I*I+1] + 1,
+		%printf("------%d\n",C[2, I*I+1]),
+	
+		if(I==1) then
+		    Maxs[1] := 1
+		else
+			Maxs[I] := Maxs[I-1] + I*I
+		end,
+        if (I >= 50) then
+            Maxs[I] := Maxs[I]-(I-49)*(I-49)
+	    end
+    end,
+	printf("log\n"),
+    foreach (K in 0..MAXSM)
+        if (C[M+1,K+1] == 1) then
+            Val := Val + K
+		end
+	end,
+	
+    printf("%w\n", Val).
+
+
+
+
+
+
+
+
+	
+	
+	
+	

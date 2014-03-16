@@ -1,0 +1,71 @@
+/*
+
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+const int r_max=1053779;
+int gcd(long long m, long long n);
+
+int main() {
+   long long m=2;
+   long long n=1;
+   long long max=2;
+   long long sum=0;
+   while(n!=max) {
+      if(gcd(m,n)==1 && (m-n)%3!=0) {
+         double r1=(1/2.0)*sqrt(3)*m*n;
+         double r2=(1/6.0)*sqrt(3)*(m+2*n)*(m-n);
+         if(r1>r_max && r2>r_max) {
+            max=m;
+            m=(++n)+1;
+            continue;
+         }
+		 
+         sum+=floor(r_max/r1)+floor(r_max/r2);
+      }
+      ++m;
+   }
+   cout << sum << endl;
+}
+int gcd(long long m, long long n) {
+   if(n==0) {
+      return m;
+   }
+   return gcd(n,m%n);
+}
+*/
+main=>
+    R_max=1053779,
+
+    M=2,
+    N=1,
+    Max=2,
+    Sum=0,
+	F = 3,
+    while(N!==Max) 
+	    F := 3,
+        if(gcd(M,N)==1 && (M-N) mod 3!==0) then
+           R1 := (1/2.0)*sqrt(3)*M*N,
+           R2 := (1/6.0)*sqrt(3)*(M+2*N)*(M-N),
+           if(R1 > R_max && R2>R_max) then
+               Max := M,
+			   N := N+1,
+               M := N+1,
+			   F := 1
+           end,
+           
+		   if (F>2) then
+		       Sum := Sum + floor(R_max/R1)+floor(R_max/R2)
+		   end
+		   
+        end,
+		if (F>2) then
+            M := M+1
+	    end
+    end,
+    printf("%w", Sum).
+	
+gcd(A, B)=Rtn =>
+    Rtn = cond(B==0,A,gcd(B, A mod B)).	

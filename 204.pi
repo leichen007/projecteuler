@@ -1,0 +1,86 @@
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 11
+
+int q[N*N];
+int p[N*N], Q;
+
+#define MAXHAMM 1000000000
+#define MAXPRIME 100
+
+
+int count(long long n,int p) {
+    long long cnt,a;
+    cnt = 0;
+    if (q[p]>MAXPRIME) return 1;
+    for (a=n;a<=MAXHAMM;a*=q[p])
+        cnt += count(a,p+1);
+    return cnt;
+}
+
+int main() {    
+	int i,n;
+    for (n=2;n<N*N;n++) 
+		p[n]=1;
+    for (i=2;i<N*N;i++)
+        if (p[i])
+            for (n=2*i;n<N*N;n+=i)
+                p[n]=0;
+    for (Q=0, i=0; i<N*N; i++)
+        if (p[i]) q[Q++] = i;
+		
+    printf("%d\n",count(1,0));
+    return 0;
+}
+*/
+main=>
+	N = 11,
+	Q = new_array(N*N),
+	P = new_array(N*N), 
+	foreach(I in 1..N*N)
+		Q[I]=0,
+		P[I]=0
+	end,
+	Q1=0,
+	
+    Nn=0,
+    
+    foreach (N1 in 2..N*N-1) 
+		P[N1+1] := 1
+	end,
+	
+    foreach (I in 2..N*N-1)
+        if (P[I+1] !==0) then
+			Nn := 2*I,
+            while (Nn<N*N)
+                P[Nn+1] := 0,
+				Nn := Nn+I
+			end
+		end
+	end,
+	
+    foreach (I in 0..N*N-1)
+        if (P[I+1] !==0) then
+			Q[Q1+1] := I,
+			Q1 := Q1+1
+		end
+	end,
+		
+    printf("%d\n",count(1,0,Q)).
+	
+count(N,P,Q)=Rtn =>
+    Cnt=0,A=0,
+	MAXHAMM =1000000000,
+	MAXPRIME =100,
+    if (Q[P+1]>MAXPRIME) then
+		Rtn = 1  %%%%%%%%%%%%
+	else
+		A := N,
+		while (A<=MAXHAMM)
+			Cnt := Cnt + count(A,P+1,Q),
+			A := A*Q[P+1]
+		end,
+		Rtn = Cnt
+	end.
