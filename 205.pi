@@ -1,0 +1,53 @@
+/*
+package euler205;
+
+public class euler205 {
+   public static void main(String[] args)
+   {
+      long start = System.nanoTime();
+      
+      int[] pyrOptions = {0, 0,  0,  1,   9,  45, 165, 486, 1206, 2598, 4950, 8451,
+               13051, 18351, 23607, 27876, 30276, 30276, 27876, 23607, 18351,
+               13051, 8451, 4950, 2598, 1206, 486, 165, 45, 9, 1};
+      int[] cubeOptions = {1, 6, 21, 56, 126, 252, 456, 756, 1161, 1666, 2247, 2856,
+               3431, 3906, 4221, 4332, 4221, 3906, 3431, 2856, 2247, 1666,
+               1161, 756, 456, 252, 126, 56, 21, 6, 1};
+      
+      long numer = 0;
+      double denom = Math.pow(4, 9) * Math.pow(6,  6);
+      
+      for(int cube = 0; cube < cubeOptions.length; cube++)
+      {
+         for(int pyr = cube + 1; pyr < pyrOptions.length; pyr++)
+         {
+            numer += pyrOptions[pyr] * cubeOptions[cube];
+         }
+      }
+      
+      long end = System.nanoTime();
+      System.out.println(numer);
+      System.out.println(denom);
+      
+      System.out.println("Solution: " + (numer/denom));
+      System.out.println("Time: " + ((end - start) / 1000000.0) + " ms");
+   }
+}
+*/
+main=>
+	PyrOptions = {0, 0,  0,  1,   9,  45, 165, 486, 1206, 2598, 4950, 8451,
+		   13051, 18351, 23607, 27876, 30276, 30276, 27876, 23607, 18351,
+		   13051, 8451, 4950, 2598, 1206, 486, 165, 45, 9, 1},
+	CubeOptions = {1, 6, 21, 56, 126, 252, 456, 756, 1161, 1666, 2247, 2856,
+		   3431, 3906, 4221, 4332, 4221, 3906, 3431, 2856, 2247, 1666,
+		   1161, 756, 456, 252, 126, 56, 21, 6, 1},
+
+	Numer = 0,
+	Denom = pow(4, 9) * pow(6,  6),
+
+	foreach(Cube in 0..(CubeOptions.length()-1) )
+		foreach(Pyr in (Cube+1)..(PyrOptions.length()-1) )
+			Numer := Numer+PyrOptions[Pyr+1] * CubeOptions[Cube+1]
+		end
+	end,
+	printf("%w  %w\n",Numer,Denom),
+	printf("%1.7f",Numer/Denom).

@@ -1,0 +1,99 @@
+/*
+#include <stdio.h>
+
+#define X 32
+#define Y 10
+
+int m[4000],n;
+
+void cute(int x,int s) {
+    if (x>=X) {
+        if (x==X) 
+			m[n++]=s;
+        return;
+    }
+    if (x)
+		s|=(1<<(x-2));
+    cute(x+2,s);
+    cute(x+3,s);
+}
+
+int main() {
+    int i,j,k;
+    long long c[4000][2],w=0;
+    cute(0,0);
+    for (j=0;j<n;j++) 
+		c[j][0]=1;
+    for (i=1;i<Y;i++) {
+        for (j=0;j<n;j++) 
+			c[j][i%2]=0;
+        for (j=0;j<n;j++)
+            for (k=0;k<n;k++)
+                if (!(m[j]&m[k])) 
+					c[j][i%2]+=c[k][(i+1)%2];
+    }
+    for (j=0;j<n;j++) 
+		w+=c[j][(Y-1)%2];
+    printf("%lld\n",w);
+    return 0;
+}
+*/
+main=>
+	Y = 10,
+	M=new_array(4000),
+	foreach(I in 1..4000)
+		M[I] := 0
+	end,
+	N={0},
+	
+    %int i,j,k;
+    %long long c[4000][2],
+    C = new_array(4000),
+    foreach(I in 1..4000)
+        Aux=new_array(2),
+        foreach(J in 1..2)
+			Aux[J] := 0
+        end,
+        C[I] := Aux
+    end,
+	
+	W=0,
+	
+    cute(0,0,M,N),
+    foreach(J in 0..N[1]-1) 
+		C[J+1,0+1] := 1
+	end,
+    foreach(I in 1..Y-1) 
+        foreach (J in 0..N[1]-1) 
+			C[J+1, I mod 2+1] := 0
+		end,
+        foreach (J in 0..N[1]-1)
+            foreach (K in 0..N[1]-1)
+                if ((M[J+1]/\M[K+1])==0 ) then
+					C[J+1, I mod 2+1] := C[J+1, I mod 2+1] + C[K+1, ((I+1) mod 2)+1]
+				end
+			end
+		end
+    end,
+	
+    foreach (J in 0..N[1]-1)
+		W := W + C[J+1, ((Y-1) mod 2)+1]
+	end,
+	
+    printf("%w\n",W).
+	
+cute(X1,S,M,N)=>
+	X = 32,
+    if (X1>=X) then
+        if (X1==X) then
+			M[N[1]+1] := S,
+			N[1] := N[1]+1
+		end
+        %return;  %%%%%%%%%%%%%%%
+    else
+		if (X1 !== 0) then
+			S := S\/(1<<(X1-2))
+		end,
+		cute(X1+2,S,M,N),
+		cute(X1+3,S,M,N)
+	end.

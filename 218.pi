@@ -1,0 +1,102 @@
+/*
+#include <stdio.h>
+#include <stdlib.h>
+
+#define amax 10000
+#define themax (amax*amax)
+#define MOD 42
+
+int gcd(int a, int b)
+{
+  int t; if (a<b) {t=a;a=b;b=t;}
+  while (b!=0) {t=a%b; a=b; b=t;}
+  return a;
+}
+
+int main()
+{
+  int i,j,c=0,d=0;
+  for(i=1;i<amax;i++)
+  {
+    int i2=i*i;
+    for(j=i+1;j<amax;j++)
+      if( (((i^j)&1)!=0)&&(gcd(i,j)==1) )
+      {
+        if (j*j+i2>themax) 
+			break;
+        c++; 
+		d++;
+		
+        int m = (i*j)%MOD; 
+		if (m==0) 
+			continue;
+			
+        m = (m*((abs(i*i - j*j))%MOD))%MOD; 
+		if (m==0) 
+			continue;
+			
+			
+        m = (m*((abs(2*i*j-i*i+j*j))%MOD))%MOD; 
+		if (m==0) 
+			continue;
+			
+        m = (m*((abs(2*i*j+i*i-j*j))%MOD)%MOD);
+		if(m==0)
+			continue;
+			
+        d--;
+      }
+  }
+  printf("c=%d\n",c); // 15 915 492
+  printf("d=%d\n",d); // 15 915 492
+  printf("c-d = %d\n",c-d); // 0
+  return 0;
+}
+*/
+main=>
+	Amax =10000,
+	Themax = 10000*10000,
+	MOD =42,
+	F=3,
+	C=0,D=0,
+	foreach(I in 1..Amax-1)
+		F:=3,
+		I2 := I*I,
+		foreach(J in I+1..Amax-1,F>2)
+			if( (((I^J)/\1)!==0)&&(gcd(I,J)==1) ) then
+				if (J*J+I2>Themax) then
+					F := 1
+				end,
+				if (F>2) then
+					C :=C+1,
+					D:=D+1,
+
+					M := (I*J) mod MOD,
+					if (M==0) then 
+						X:=1
+					else
+						M := (M*((abs(I*I - J*J)) mod MOD)) mod MOD, 
+						if (M==0) then
+							X:=1
+						else
+							M := (M*((abs(2*I*J-I*I+J*J)) mod MOD)) mod MOD,
+							if (M==0) then 
+								X:=1
+							else
+								M := (M*((abs(2*I*J+I*I-J*J)) mod MOD) mod MOD), 
+								if(M==0) then
+									X:=1
+								else
+									D:=D-1
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end,
+	printf("%d\n",C-D).
+	
+gcd(A, B)=Rtn =>
+    Rtn = cond(B==0,A,gcd(B, A mod B)).

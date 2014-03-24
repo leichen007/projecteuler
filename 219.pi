@@ -1,0 +1,32 @@
+/*
+total = 4
+arr = [[1,3],[1,4],[1,5],[1,6]]
+maxi =1000000000
+while(total < maxi):
+    temp = arr[0]
+    arr[0] = [arr[1][0]+temp[0],arr[1][1]]
+    arr[1] = arr[2]
+    arr[2] = arr[3]
+    arr[3] = [temp[0],temp[1]+4]
+    total += temp[0]
+    
+print((total-maxi)*(arr[3][1]-4)+(arr[0][0]-total+maxi)*arr[0][1]+arr[1][0]*arr[1][1]+arr[2][0]*arr[2][1]+
+      (arr[3][0]-total+maxi)*arr[3][1])
+
+*/
+main=>
+	Total = 4,
+	Arr = {{1,3},{1,4},{1,5},{1,6}},
+	Maxi =1000000000,
+
+	while(Total < Maxi)
+		Temp := Arr[1],  %%%%%%%%%%%%%%%%%%%%%%%%%%% already changed
+		Arr[1] := {Arr[2,1]+Temp[1],Arr[2,2]},
+		Arr[2] := Arr[3],
+		Arr[3] := Arr[4],
+		Arr[4] := {Temp[1],Temp[2]+4},
+		Total := Total +Temp[1]
+	end,
+		
+	printf("%w",(Total-Maxi)*(Arr[4,2]-4)+(Arr[1,1]-Total+Maxi)*Arr[1,2]+Arr[2,1]*Arr[2,2]+Arr[3,1]*Arr[3,2]+
+		  (Arr[4,1]-Total+Maxi)*Arr[4,2]).

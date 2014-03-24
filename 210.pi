@@ -1,0 +1,31 @@
+/*
+#include <stdio.h>
+
+#define R (1000000000LL/4)
+
+int main() {
+    long long n,x,y,yy,x1;
+    for (n=0,y=R,x=1;x<R;x++) {
+        for (yy=R*R-x*x;y*y>=yy;y--) ;
+		x1=(y+( (y+x+1)&1 ))>>1<<1;
+        n += x1;
+    }
+    printf("%lli\n",(12*R*R+(R-1)/2+n)<<1);
+    return 0;
+}
+*/
+main=>
+	R = 250000000,
+	
+    N=0,Y=R,Yy=0,
+    foreach (X in 1..R-1) 
+	    Yy := R*R-X*X,
+        while(Y*Y>=Yy)
+		    Y := Y-1
+		end,
+		
+		X1 := (Y + ( (Y+X+1)/\1))>>1<<1,
+        N := N + X1
+    end,
+	
+    printf("%w\n",(12*R*R+(R-1)//2+N)<<1).

@@ -1,0 +1,119 @@
+/*
+#include<stdio.h>
+#include<string.h>
+#include<vector>
+#include<iostream>
+
+typedef long long __int64;
+
+
+int memo[65];
+std::vector<int> list;
+
+//__int64 ans[10]={0};
+
+int calcNext(int bits){
+	int mask[6]={32,16,8,4,2,1};
+   int b = ((bits&mask[1])!=0);
+   int c = ((bits&mask[2])!=0);
+   int a = ((bits&mask[0])!=0);
+   
+   int f=a^(b&c);
+   
+   return ((bits<<1)&63)|f;
+}
+
+int main(){
+   int count=0,bits2;
+   memset(memo,-1,sizeof(memo));
+
+   for(int bits=0;bits<64;bits++){
+      if(memo[bits]==-1){
+         bits2=bits;
+         list.push_back(0);
+         while(memo[bits2]==-1){
+            memo[bits2]=count;
+            list[count]++;
+            bits2=calcNext(bits2);
+         }
+         count++;
+      }
+   }
+   __int64 ans=1;
+   __int64 tPerm[50]={0},fPerm[50]={0},t=1,f=0,t2,f2;
+   for(int i=1;i<50;i++){
+      t2=f;
+      f2=f+t;
+      t=t2;
+      f=f2;
+      tPerm[i]=t;
+      fPerm[i-1]=f;
+   }
+   
+   for(int i=0;i<list.size();i++){
+      int p=list[i];
+      ans*=(tPerm[p]+fPerm[p]);
+   }
+   std::cout<<ans;
+}
+*/
+main=>
+	Memo = new_array(65),
+	List =new_list(0),
+	foreach(I in 1..65)
+		Memo[I] = -1
+	end,
+	
+	Count=0,Bits2=0,
+	
+	foreach(Bits in 0..63)
+	  if(Memo[Bits+1] == -1) then
+		 Bits2 := Bits,
+		 %list.push_back(0),
+		 List := insert(List,length(List)+1,0),
+		 
+		 while(Memo[Bits2+1] == -1)
+			Memo[Bits2+1] := Count,
+			List[Count+1] := List[Count+1]+1,
+			Bits2 := calcNext(Bits2)
+		 end,
+		 
+		 Count := Count+1
+	  end
+	end,
+	
+	Ans=1,
+	TPerm = new_array(50),FPerm=new_array(50),
+	foreach(I in 1..50)
+		TPerm[I] = 0,
+		FPerm[I] = 0
+	end,
+	
+	T=1,F=0,T2=0,F2=0,
+	
+	foreach(I in 1..49)
+	  T2 := F,
+	  F2 := F+T,
+	  T := T2,
+	  F := F2,
+	  TPerm[I+1] := T,
+	  FPerm[I] := F
+	end,
+	
+	foreach(I in 0..List.length()-1)
+	  P := List[I+1],
+	  Ans := Ans*(TPerm[P+1]+FPerm[P+1])
+	end,
+	
+	printf("%w",Ans).
+	
+calcNext(Bits)=Rtn =>
+	Mask ={32,16,8,4,2,1},
+    B= cond((Bits/\Mask[2])!==0, 1,0),
+   
+    C= cond((Bits/\Mask[3])!==0, 1,0),
+   
+    A= cond((Bits/\Mask[1])!==0, 1,0),
+    F=A^(B/\C),
+   
+    Rtn = ((Bits<<1)/\63)\/F.

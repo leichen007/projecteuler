@@ -1,0 +1,191 @@
+/*
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+#define N 47
+#define k 9*(N/2)
+
+int main () {
+   double startt=clock();
+   long long ans=45;
+   long long modd=1;
+   for (int i=0; i<15; i++) 
+      modd*=3;
+   long long pow10[N]={1};
+
+   for (int i=1; i<N; i++) 
+      pow10[i]=(10*pow10[i-1])%modd;
+   long long S[N/2+1][2*k+1]={}, T[N/2+1][2*k+1]={};
+//here S[i][j] stores the count of balanced numbers with i digits to the left of the centre, where the sum of left - sum of right = j (the array index is offset by k, due to negatives), and T[i][j] stores the sum of these balanced numbers
+   S[0][k]=10, T[0][k]=45;
+
+   //odds
+   for (int n=1; 2*n<=N-1; n++) {
+      for (int j=k-(n-1)*9; j<=k+(n-1)*9; j++) 
+	     if(S[n-1][j]!=0) {
+            for (int a=1; a<10; a++) 
+			   for (int b=0; b<10; b++) {
+                  S[n][j+a-b]+=S[n-1][j]; 
+			      S[n][j+a-b]%=modd;
+                  T[n][j+a-b]+=10*T[n-1][j]+S[n-1][j]*(a*pow10[2*n]+b);
+			      T[n][j+a-b]%=modd;
+				 
+               }
+         }
+      ans+=T[n][k], ans%=modd;
+
+      for (int j=k-(n-1)*9; j<=k+(n-1)*9; j++) 
+	     if(S[n-1][j]!=0) {
+            for (int b=0; b<10; b++) {
+               S[n][j-b] += S[n-1][j];
+			   S[n][j-b] %= modd;
+               T[n][j-b] += 10*T[n-1][j]+S[n-1][j]*b;
+			   T[n][j-b] %= modd;
+            }
+         }
+   }
+
+   for (int i=0; i<N/2+1; i++) 
+      for (int j=0; j<2*k+1; j++) {
+	     S[i][j]=0;
+		 T[i][j]=0;
+	  }
+   //evens
+   S[0][k]=1;
+   for (int n=1; 2*n<=N; n++) {
+      for (int j=k-(n-1)*9; j<=k+(n-1)*9; j++) if(S[n-1][j]!=0) {
+         for (int a=1; a<10; a++) 
+		    for (int b=0; b<10; b++) {
+               S[n][j+a-b] += S[n-1][j];
+			   S[n][j+a-b] %= modd;
+               T[n][j+a-b] += 10*T[n-1][j]+S[n-1][j]*(a*pow10[2*n-1]+b);
+			   T[n][j+a-b] %= modd;
+            }
+      }
+      ans+=T[n][k], ans%=modd;
+      for (int j=k-(n-1)*9; j<=k+(n-1)*9; j++) 
+	     if(S[n-1][j]!=0) {
+            for (int b=0; b<10; b++) {
+               S[n][j-b] += S[n-1][j];
+			   S[n][j-b] %= modd;
+               T[n][j-b] += 10*T[n-1][j]+S[n-1][j]*b;
+			   T[n][j-b] %= modd;
+            }
+         }
+   }
+
+   cout<<ans<<endl;
+   cout<<"time: "<<(clock()-startt)/CLOCKS_PER_SEC<<endl;
+
+   return 0;
+}
+*/
+main=>
+	N = 47,
+	K =207,
+   Ans=45,
+   Modd=1,
+   foreach (I in 0..14) 
+      Modd := Modd*3
+   end,
+   
+   Pow10 = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+   foreach (I in 1..N-1) 
+      Pow10[I+1] := (10*Pow10[I]) mod Modd
+   end,
+   
+    S = new_array(N//2+1),
+    foreach(I in 1..N//2+1)
+        Aux=new_array(2*K+1),
+        foreach(J in 1..2*K+1)
+	        Aux[J] := 0
+        end,
+        S[I] := Aux
+    end,
+	T = new_array(N//2+1),
+    foreach(I in 1..N//2+1)
+        Aux=new_array(2*K+1),
+        foreach(J in 1..2*K+1)
+	        Aux[J] := 0
+        end,
+        T[I] := Aux
+    end,   
+	S[1,K+1] := 10, T[1,K+1] := 45,
+	
+	N1=1,
+
+	while (2*N1 <= N-1)
+      foreach (J in K-(N1-1)*9..K+(N1-1)*9) 
+	     if(S[N1,J+1]!==0) then
+            foreach (A in 1..9) 
+			   foreach (B in 0..9) 
+                  S[N1+1,J+A-B+1] := S[N1+1,J+A-B+1]+S[N1,J+1], 
+				  S[N1+1,J+A-B+1] := S[N1+1,J+A-B+1] mod Modd,
+                  T[N1+1,J+A-B+1] := T[N1+1,J+A-B+1] + 10*T[N1,J+1]+S[N1,J+1]*(A*Pow10[2*N1+1]+B),
+				  T[N1+1,J+A-B+1] := T[N1+1,J+A-B+1] mod Modd
+			   end
+            end
+         end
+	  end,
+
+      Ans := Ans+T[N1+1,K+1], Ans := Ans mod Modd,
+	  
+      foreach (J in K-(N1-1)*9..K+(N1-1)*9) 
+	     if(S[N1,J+1] !== 0) then
+            foreach (B in 0..9)
+               S[N1+1,J-B+1] := S[N1+1,J-B+1] + S[N1,J+1], 
+			   S[N1+1,J-B+1] := S[N1+1,J-B+1] mod Modd,
+               T[N1+1,J-B+1] := T[N1+1,J-B+1] + 10*T[N1,J+1]+S[N1,J+1]*B, 
+			   T[N1+1,J-B+1] := T[N1+1,J-B+1] mod Modd
+            end
+         end
+	  end,
+	  N1:=N1+1
+   end,
+   
+   foreach (I in 0..(N/2+1)-1) 
+      foreach (J in 0..2*K) 
+	     S[I+1,J+1]:=0,
+		 T[I+1,J+1]:=0
+	  end
+   end,
+   S[1,K+1] :=1,  
+   
+   N1 := 1,
+   while (2*N1 <= N)
+      foreach (J in K-(N1-1)*9..K+(N1-1)*9) 
+		  if(S[N1,J+1]!==0) then
+			 foreach (A in 1..9) 
+				 foreach (B in 0..9) 
+					S[N1+1,J+A-B+1] := S[N1+1,J+A-B+1]+S[N1,J+1], 
+					S[N1+1,J+A-B+1] := S[N1+1,J+A-B+1] mod Modd,
+					T[N1+1,J+A-B+1] := T[N1+1,J+A-B+1]+10*T[N1,J+1]+S[N1,J+1]*(A*Pow10[2*N1]+B), 
+					T[N1+1,J+A-B+1] := T[N1+1,J+A-B+1] mod Modd
+				 end
+			 end
+		  end
+	  end,
+      Ans:=Ans+T[N1+1,K+1], Ans :=Ans mod Modd,
+      foreach (J in K-(N1-1)*9..K+(N1-1)*9) 
+		  if(S[N1,J+1]!==0) then
+			 foreach (B in 0..9) 
+				S[N1+1,J-B+1] := S[N1+1,J-B+1]+S[N1,J+1], 
+				S[N1+1,J-B+1] := S[N1+1,J-B+1] mod Modd,
+				T[N1+1,J-B+1] := T[N1+1,J-B+1] + 10*T[N1,J+1]+S[N1,J+1]*B, 
+				T[N1+1,J-B+1] := T[N1+1,J-B+1] mod Modd
+			 end
+		  end
+	  end,
+	  N1 := N1+1
+   end,
+   
+   printf("%w",Ans).
+   
+   
+   
+   
+   
+   
+   
+   

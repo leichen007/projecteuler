@@ -1,0 +1,61 @@
+/*
+#include <iostream>
+
+using namespace std;
+const long MAX=40000000;
+long totient[MAX],chain[MAX];
+int main()
+{
+    long i,j;
+    uint64_t sum=0;
+    for(i=1;i<MAX;i++) totient[i]=i;
+    for(i=2;i<MAX;i++) if(totient[i]==i) for(j=i;j<MAX;j+=i) totient[j]=totient[j]/i*(i-1);
+    chain[1]=1;
+    for(i=2;i<MAX;i++)
+    {
+        chain[i]=chain[totient[i]]+1;
+        if((chain[i]==25)&&(totient[i]==i-1)) sum+=i;
+    }
+    cout << sum << endl;
+    return 0;
+}
+*/
+main=>
+	MAX=40000000,
+	
+	Totient = new_array(MAX),
+	
+	Chain = new_array(MAX),
+	printf("log\n"),
+	%%%%%%%%%%%%%%%%%%%%%%%%5
+	foreach(I in 1..MAX)
+		Totient[I] := 0,
+		Chain[I] := 0
+	end,
+	%%%%%%%%%%%%%%%%%%%5
+    %long i,j;
+    Sum=0,
+    foreach(I in 1..MAX-1) 
+		Totient[I+1] := I
+	end,
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+    foreach(I in 2..MAX-1)
+		if(Totient[I+1] == I) then
+			J := I,
+			while(J<MAX)
+				Totient[J+1] := Totient[J+1]//I*(I-1),
+				J := J+I
+			end
+		end
+	end,
+	%%%%%%%%%%%%%%%%%%%
+    Chain[1]=1,
+	
+    foreach(I in 2..MAX-1)
+        Chain[I+1] := Chain[Totient[I+1]]+1,
+        if((Chain[I+1]==25)&&(Totient[I+1]==I-1)) then
+			Sum := Sum+I
+		end
+    end,
+	
+	printf("%w",Sum).

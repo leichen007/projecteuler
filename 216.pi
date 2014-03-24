@@ -1,0 +1,38 @@
+main=>
+	N1 = 50000000,
+	
+	F = new_array(N1+1),
+	G = new_array(N1+1),
+	foreach(I in 1..N1+1)
+	    F[I]=0,
+		G[I]=0
+	end,
+	
+	I=0,S=0,Cnt=N1-1,
+	
+    foreach (N in 2..N1) 
+		G[N] := 2*N*N-1
+	end,
+	
+    foreach (N in 2..N1) 
+        if (G[N+1]>1) then
+			S := -1,
+            while (S<=1)
+				I := G[N+1]+S*N,
+                while(I<=N1)
+                    if (G[I+1] mod G[N+1]==0) then
+                        F[I+1] := 1,
+                        while (G[I+1] mod G[N+1]==0)
+                            G[I+1] := G[I+1]//G[N+1]
+						end
+                    end,
+					I := I+G[N+1]
+				end,
+				S := S+2
+			end
+		end,
+        Cnt := Cnt-F[N+1]
+    end,
+    printf("%w\n",Cnt).
+	
+	
