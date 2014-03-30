@@ -1,0 +1,32 @@
+/*
+#include <iostream>
+using namespace std;
+
+int br=0;
+
+void r(int a, int b, int c){
+    if (a+b+c<=75000000) {
+		br++; 
+		r(2*c+b-2*a,2*c+2*b-a,3*c+2*b-2*a);
+		r(2*c+b+2*a,2*c+2*b+a,3*c+2*b+2*a);
+		r(2*c-2*b+a,2*c-b+2*a,3*c-2*b+2*a);
+	}
+}
+int main(){
+    r(2,2,3);
+    cout<<br/2+5;
+    return 0;
+}
+*/
+main=>
+	Br={0},
+    r(2,2,3,Br),
+    printf("%w",Br[1]//2+5).	
+
+r(A,B,C,Br)=>
+    if (A+B+C<=75000000) then
+		Br[1] := Br[1] + 1,
+		r(2*C+B-2*A,2*C+2*B-A,3*C+2*B-2*A,Br),
+		r(2*C+B+2*A,2*C+2*B+A,3*C+2*B+2*A,Br),
+		r(2*C-2*B+A,2*C-B+2*A,3*C-2*B+2*A,Br)
+	end.

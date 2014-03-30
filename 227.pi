@@ -1,0 +1,68 @@
+/*
+#include <iostream>
+#include <cmath>
+#include <cstdio>
+
+using namespace std;
+
+double ans[101];
+double probs[5];
+
+int main() {
+    probs[0] = probs[4] = 1./36;
+    probs[1] = probs[3] = 2./9;
+    probs[2] = 0.5;
+    int tmp = 0;
+	int count=0;
+    while (count<9) {
+        for (int i=1; i<=50; i++) {
+            double newans = 1;
+            for (int j=0; j<5; j++) {
+                int newgap = i+j-2;
+                if (newgap<0) newgap=-newgap;
+                if (newgap>50) newgap=100-newgap;
+                newans += probs[j] * ans[newgap];
+            }
+            ans[i]=newans;
+        }
+        if (tmp%10000==0) 
+			count++;
+		tmp++;
+    }
+	printf("%.6f\n",ans[50]);
+}
+*/
+main=>
+	Ans = new_array(101),
+	foreach(I in 1..101)
+	    Ans[I] := 0
+	end,
+	Probs={1/36, 2/9, 0.5, 2/9, 1/36},
+	
+    Tmp = 0,
+	Count=0,Newans=0,Newgap=0,
+	
+    while (Count<9)
+        foreach (I in 1..50) 
+            Newans := 1,
+            foreach (J in 0..4) 
+                Newgap := I+J-2,
+                if (Newgap<0) then
+					Newgap := -Newgap
+				end,
+				
+                if (Newgap>50) then
+					Newgap := 100-Newgap
+				end,
+				
+                Newans := Newans + Probs[J+1]*Ans[Newgap+1]
+            end,
+            Ans[I+1] := Newans
+        end,
+		
+        if (Tmp mod 10000==0) then
+			Count := Count+1
+		end,
+		Tmp := Tmp + 1
+    end,
+	printf("%.6f\n",Ans[51]).

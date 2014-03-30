@@ -1,0 +1,66 @@
+/*
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+int f(int p, int q) {return q*(q-1)/2 + p;}
+int gcd(int A, int B);
+
+int main () {
+   clock_t start = clock();
+
+   bool* thing; 
+   thing=(bool*)calloc(f(0,1910),sizeof(bool));   //1823095
+      
+   int ff;
+   int tot=0;
+   for (int q=1864; q<=1909; q++) {
+      for (int p=0; p<q; p++) {
+         int d=gcd(q,p);
+         ff=f(p/d, q/d);
+         if (!thing[ff]) {
+			tot++;
+			thing[ff]=1;
+		}
+      }
+   }
+   cout<<tot<<endl;
+   
+   cout<<"time: "<< (clock() - start)/CLOCKS_PER_SEC<<endl;
+   
+   return 0;
+}
+
+int gcd(int A, int B)
+{
+    return (B==0? A: gcd(B, A%B));
+}
+*/
+main=>
+   Thing = new_array(1823095),
+   foreach(I in 1..1823095)
+      Thing[I] := 0
+   end,
+   
+   Ff=0,
+   Tot=0,
+   foreach (Q in 1864..1909) 
+      foreach (P in 0..Q-1) 
+         D := gcd(Q,P),
+         Ff := f(P//D, Q//D),
+         if (Thing[Ff+1] ==0 ) then
+			Tot := Tot+1,
+			Thing[Ff+1] :=1
+		end
+      end
+   end,
+   
+   printf("%d",  Tot).
+
+gcd(A, B)=Rtn =>
+    Rtn = cond(B==0,A,gcd(B, A mod B)).
+
+f(P,Q)=Rtn =>
+    Rtn = Q*(Q-1)//2 + P.

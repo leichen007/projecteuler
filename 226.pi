@@ -1,0 +1,83 @@
+/*
+#include <iostream>
+#include <cmath>
+#include <time.h>
+#include <stdio.h>
+
+using namespace std;
+
+int main()
+{
+	clock_t start = clock();
+    long double x, y, num, summand, integral, riemann;
+    long double pow_table[51];
+
+    for (int n=0; n<=50; n++)
+        pow_table[n]=pow(2,n);
+
+    //left part of curve - part under the circle (from maple)
+    integral=0.25-0.1223107307;
+
+    //subtract part left of the circle using riemann stripes
+    riemann=0.00000001;
+    for (x=0; x<=0.078907788; x+=riemann)
+    {
+        y=0;
+        for (int n=0; ; n++)
+        {
+            num = fmod(pow_table[n]*x,1);
+			//cout<<pow_table[n]*x<<" "<<num<<endl;
+			//getchar();
+            if (num > 0.5)
+                num = 1-num;
+
+            summand = (double)num/pow_table[n];
+            y += summand;
+
+            if (summand<0.000000005)
+			{
+				//cout<<n<<endl;
+                break;
+			}
+        }
+        integral -= y*riemann;
+    }
+	
+    cout.precision(8);
+    cout << integral << endl;
+	cout<<"Time: "<<( (double)(clock()-start) )/CLOCKS_PER_SEC<<endl;
+	
+	return 0;
+}
+*/
+main=>
+    X=0,Y=0, Num=0, Summand=0, Integral=0.25-0.1223107307, Riemann=0.00000001, F=3, 
+    Pow_table=new_array(51), 
+
+    foreach (I in 0..50)
+        Pow_table[I+1] := pow(2,I)
+	end,
+
+    while(X<=0.078907788)
+        Y := 0,
+		F := 3,
+        foreach (N in 0..50,F>2)
+		    modf(Pow_table[N+1]*X) = (IntVal,FractVal),
+			Num := FractVal,
+			
+            if (Num > 0.5) then
+                Num := 1-Num
+			end,
+
+            Summand := Num/Pow_table[N+1],
+            Y := Y+Summand,
+
+            if (Summand<0.000000005) then
+                F:=1
+			end
+        end,
+        Integral := Integral -Y*Riemann,
+		X := X+Riemann
+    end,
+	
+	printf("%.8f", Integral).

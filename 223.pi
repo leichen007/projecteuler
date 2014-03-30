@@ -1,0 +1,118 @@
+/*
+#include <stdio.h>
+#include <time.h>
+
+#define P 25000000
+
+int s[P/2+1],t[P/2+1],pmax,a,cnt;
+
+void go(int m,int n,long long p,long long r,int o) {
+    long long q,b=p-r*m*n,f;
+    if (p!=o && b>1 && ( b>=a||(b&1)==0 ) ) 
+		cnt++;
+    if (m==1) 
+		m=n,n=1;
+    if (m>1) {
+		f=t[m],q=r,r*=s[m],o=p,m/=s[m];
+        while (r>=q) {
+            if (p<<1>pmax) 
+				break;
+            else 
+				go(m,n,p,r,o);
+			r/=f,p*=f;
+		}
+	}
+}
+
+int main() {
+	clock_t start = clock();
+    int m,n;
+    long long u;
+    for (n=2;n<=P/2;n++) {
+        if (!s[n]) {
+            for (u=n;u<=P/2;u*=n)
+                for (m=u;m<=P/2;m+=u) 
+					s[m]=u;
+            for (m=n;m<=P/2;m+=n) 
+				t[m]=n;
+        }
+	}
+    for (n=2;n<P/4;n++) {
+        a=2*n+1,pmax=P-a;
+        go(n+1,n,1LL,1LL,1);
+    }
+    printf("Count: %i\n",cnt+P/2-1);
+	printf("%f",( (double)(clock()-start) )/CLOCKS_PER_SEC);
+    return 0;
+}
+*/
+main=>
+	P1 = 25000000,
+	S=new_array(to_integer(P1/2+1)),
+	T=new_array(to_integer(P1/2+1)),
+	foreach(I in 1..12500001) %12500000
+	    S[I] := 0,
+		T[I] := 0
+	end,
+	
+	Pmax={0},A={0},Cnt={0},
+	
+    M=0, U=0,
+
+    foreach (N in 2..12500000)
+        if (S[N+1] ==0) then
+		    U:=N,
+            while (U<=12500000)
+			    M := U,
+                while (M <= 12500000)
+					S[M+1] := U,
+					M := M + U
+				end,
+				U := U*N
+			end,
+			M := N,
+            while (M<=12500000) 
+				T[M+1] := N,
+				M := M + N
+			end
+        end
+	end,
+	
+    foreach (N in 2..P1//4-1) 
+        A[1] := 2*N+1,
+		Pmax[1] := P1-A[1],
+        go(N+1,N,1,1,1,S,T,Pmax,A,Cnt)
+    end,
+	
+    printf("Count: %w\n",Cnt[1]+P1//2-1).
+	
+go(M,N,P,R,O,S,T,Pmax,A,Cnt)=>
+    Q=0,B=P-R*M*N,F=0,F2=3,
+    if (P!=O && B>1 && ( B>=A[1]||(B/\1)==0) ) then
+		Cnt[1] := Cnt[1]+1
+	end,
+	
+    if (M==1) then
+		M := N,N:=1
+	end,
+	
+    if (M>1) then
+		F :=T[M+1],
+		Q:=R,
+		R:=R*S[M+1],
+		O:=P,
+		%printf("333333333   %w  %w\n",M,S[M+1]),
+		
+		M:=M//S[M+1],
+        while (R>=Q,F2>2)
+            if (P<<1>Pmax[1]) then
+				F2 := 1
+            else 
+				go(M,N,P,R,O,S,T,Pmax,A,Cnt)
+			end,
+			if (F2>2) then
+				R := R//F,
+				P := P*F
+			end
+		end
+	end.

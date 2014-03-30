@@ -1,0 +1,43 @@
+/*
+#include <stdio.h>
+
+main()
+{
+    int i, a, b, x, y, dx, dy; 
+    long long int s = 1000000000000LL;
+
+    x = y = 0;
+    dx = 0; dy = 1<<20;
+    a = b = 1;
+    for( i=40; i>=0; i-- ) { 
+        if( s & (1LL<<i) ) {
+            x += a*dx;
+            y += a*dy;
+            a = -b;
+        }
+        else
+            b = a;
+        dy = (dx+dy)/2;
+        dx -= dy;
+    }
+    printf( "%d,%d\n", x, y );
+}
+*/
+main=>
+    A=1, B=1, X=0, Y=0, Dx=0, Dy=1<<20,
+    S = 1000000000000,
+
+    foreach(I in 40..-1..0) 
+        if( S /\ (1<<I) !== 0 ) then
+            X := X+ A*Dx,
+            Y := Y+ A*Dy,
+            A := -B
+        else
+            B := A
+		end,
+		
+        Dy := (Dx+Dy)//2,
+        Dx := Dx-Dy
+    end,
+	
+    printf( "%w,%w\n", X, Y ).

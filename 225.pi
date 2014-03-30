@@ -1,0 +1,65 @@
+/*
+#include <stdio.h>
+
+int main() {
+    int a,b,c,i,t,m,n,max;
+    n=0;
+    max=0;
+    for (m=5;;m+=2) {
+        i=0;
+        a=b=c=1;
+        while (1) {
+            if (c==0) 
+				break;
+            i++;
+            t=(a+b+c)%m,a=b,b=c;
+            c=t;
+            if (a+b+c==3)
+				break;
+        }
+        if (t!=0) {
+            n++;
+            if (i>max) 
+				max=i;
+            if (n==124) 
+				break;
+        }
+    }
+    printf("%i\n",m);
+    return 0;
+}
+*/
+main=>
+    A=0, B=0, C=0, I=0, T=0, M=5, N=0, Max=0,
+	F1 = 3, F2 = 3,
+    while (F1>2) 
+        I:=0,F2 := 3,
+        A:=1,B:=1,C:=1,
+        while (F2>2) 
+            if (C==0) then
+				F2 :=1
+			else
+				I := I+1,
+				T := (A+B+C) mod M,A:=B,B:=C,
+				C:=T,
+				if (A+B+C==3) then
+					F2:=1
+				end
+			end
+        end,
+		
+        if (T!==0) then
+            N:=N+1,
+            if (I>Max) then
+				Max := I
+			end,
+			
+            if (N==124) then
+				F1 := 1
+			end
+        end,
+		if (F1>2) then
+			M:=M+2
+		end
+    end,
+    printf("%w\n",M).

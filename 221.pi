@@ -1,0 +1,47 @@
+main=>
+	A = new_array(467853),
+	foreach(I in 1..467853)
+	    A[I] := 0
+	end,
+	printf("11111111"),
+	Index = 0,
+	foreach (R in 1..80000-1)
+		X := R * R + 1,
+		foreach (Y in 1..R)
+			if (X mod Y == 0) then
+				P := R + Y,
+				Q := R + (X // Y),
+				Pqr := R * P * Q,
+				Index := Index+1,
+				A[Index] := Pqr
+				%A := insert(A,length(A)+1,Pqr)
+			end
+		end
+	end,
+	printf("log\n"),
+	
+	bubbleSort(A,467853),
+	
+	printf("%w", A[150005]).
+	/*foreach (T in 149990..150010)
+		printf("%w",A[T])
+	end.
+	*/
+	
+bubbleSort(A,N)=>
+	foreach (I in 0..N-2)
+		foreach (J in N-1..-1..I+1)
+			if (A[J+1] < A[J]) then
+				%swap(&a[j], &a[j-1])
+				Temp := A[J+1],
+				A[J+1] := A[J],
+				A[J] := Temp
+			end
+		end
+	end
+
+				
+				
+				
+				
+				

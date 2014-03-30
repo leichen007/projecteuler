@@ -1,0 +1,38 @@
+/*
+#include <stdio.h>
+#include <math.h>
+#define T 100
+#define R 30
+#define N 21
+
+int main() {
+    int d,p,q,r;
+    double l;
+    p=q=R;
+    l=2*(R+N)-3;
+    for (r=R+1;r<R+N;r++) {
+	    d=r+p;
+	    l+=sqrt( (double)(d*d-(T-d)*(T-d)) );
+	    p=q,q=r;
+    }
+	long x = l*1000;
+    printf("%ld\n",x);
+    return 0;
+}
+*/
+main=>
+    T =100,
+    R =30,
+    N =21,
+	
+    D=0,P=30,Q=30,
+    L =2*(R+N)-3,
+	
+    foreach (I in R+1..R+N-1) 
+	    D := I+P,
+	    L := L+sqrt( D*D-(T-D)*(T-D) ),
+	    P := Q,
+		Q := I
+    end,
+	
+	printf("%w\n",to_integer(L*1000)).
