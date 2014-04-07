@@ -1,0 +1,77 @@
+/*
+#include <stdio.h>
+
+unsigned long nCr(unsigned n, unsigned r)
+{
+   unsigned i, nby2 = n>>1;
+   unsigned long val = n;
+
+    if (r > nby2) 
+    { 
+        r = n-r; 
+    }
+   if (r == 0) 
+      return (1L);
+   for (i=1; i<r; i++){
+     val *= (unsigned long)(n-i);
+     val /= (unsigned long)i;
+   }
+   val /= (unsigned long)r;
+   
+   return (val);
+}
+
+int main()
+{
+    double p = 0.0, K, t;
+    int i, j;
+
+    K = nCr(25,3);
+	
+    for (i = 0; i <= 22; i++){
+      t = K * (double)nCr(22,i);
+      for (j = 0; j < i; j++)
+        t /= (double)(97-j);
+      p += t;
+      K = -K;
+    }
+    p = p /(98.0*99.0*100.0);
+    printf ("Answer = %.12lf\n", p);
+
+    return (0);
+}
+*/
+main=>
+    P = 0.0, K = 0.0, T=0.0,
+    K := nCr(25,3),
+
+    foreach (I in 0..22)
+        T := K * nCr(22,I),
+        foreach (J in 0..I-1)
+            T := T/(97-J)
+		end,
+        P := P+T,
+        K := -K
+    end,
+    
+    P := P /(98.0*99.0*100.0),
+    printf ("%.12lf\n", P).
+	
+nCr(N,R)=Rtn =>
+    Nby2 = N>>1,
+    Val = N,
+
+    if (R > Nby2) then
+        R := N-R 
+    end,
+    if (R == 0) then
+        Rtn = 1
+	else
+        foreach (I in 1..R-1)
+            Val := Val *(N-I),
+            Val := Val //I
+        end,
+        Val := Val //R,
+   
+        Rtn = Val
+	end.

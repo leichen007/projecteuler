@@ -1,0 +1,58 @@
+/*
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+double sum (double r, int N)
+{
+   double rval=0, R=1.0/r; int A=900;
+   for (int k=1; k<=N; k++)
+   {A -= 3; R *= r; rval += A*R;}
+   return rval;
+}
+
+int main ()
+{
+   int N = 5000; double r=1.002, min=1, max=1.004, C;
+   while (1)
+   {
+      C = sum(r,N) + 600000000000;
+      if (C<1000 && C>-1000) {break;}
+      if (C<0) {max=r; r=0.5*(min+r);}
+      else {min=r; r=0.5*(max+r);}
+   }
+   
+   printf("%.12f", r);
+   
+   return 0;
+}
+*/
+main=>
+   N = 5000, R=1.002, Min=1, Max=1.004, C=0, F= 3,
+   
+   while (F >2)
+      C := sum(R,N) + 600000000000,
+      if (C<1000 && C>(-1000)) then
+	      F := 1
+	  end,
+	  if (F>2) then
+		  if (C<0) then
+			 Max := R, 
+			 R :=0.5*(Min+R)
+		  else 
+			 Min := R, 
+			 R :=0.5*(Max+R)
+		  end
+	  end
+   end,
+   
+   printf("%.12f", R).
+
+
+sum (R, N)=Rtn =>
+   Rval=0, R1 := 1.0/R, A=900,
+   foreach (K in 1..N)
+       A := A- 3, R1 := R1* R, Rval := Rval + A*R1
+   end,
+   Rtn = Rval.

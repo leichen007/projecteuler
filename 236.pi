@@ -1,0 +1,29 @@
+main=>
+    LIMIT = 1000,
+	T=0,T2=0,G=0,S=0,S2=0,
+	foreach(I in 1..LIMIT)
+
+	   foreach(J in 1..LIMIT)
+		  foreach(K in 1..LIMIT)
+			 T := 6372*(41*I+205*J+5*K),
+			 T2 := 205*(90*I+5310*J+59*K),
+			 G := gcd(T,T2),
+			 T := T //G,
+			 T2 := T2//G,
+			 S := sqrt(T),
+			 if(S*S == T) then
+				S2 = sqrt(T2),
+				if(S2*S2 == T2
+				   && S*41 > 59*S2
+				   && S*I <= 37760
+				   && S*J <= 11328
+				   && S*K <= 339840) then
+				   printf("%i, %i, %i:  %i/%i\n",I,J,K,S,S2)
+				 end
+			 end
+		  end
+		end
+	end.
+	
+gcd(A,B)=Rtn =>
+    Rtn = cond(B==0, A, gcd(B, A mod B)).

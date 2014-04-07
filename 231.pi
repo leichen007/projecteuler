@@ -1,0 +1,52 @@
+/*
+#include <stdio.h>
+
+#define N 20000000
+#define R 15000000
+
+long long s[N+1],i,j,k,sum=0;
+
+int main() {
+    for (i=2;i<=N;i++)
+        if (!s[i])
+            for (j=i;j<=N;j*=i)
+                for (k=j;k<=N;k+=j)
+                    s[k]+=i;
+    for (i=2;i<=N-R;i++) 
+		sum-=s[i];
+    for (i=R+1;i<=N;i++) 
+		sum+=s[i];
+    printf("%lld\n",sum);
+    return 0;
+}
+*/
+main=>
+	N= 20000000,
+	R= 15000000,
+	
+	S=new_array(N+1),
+	foreach(I in 1..20000001)
+		S[I] := 0
+	end,
+	Sum=0, J=0,K=0,
+	
+    foreach (I in 2..N)
+        if (S[I+1]==0) then
+			J := I,
+            while (J<=N)
+				K:=J,
+                while (K<=N)
+                    S[K+1] := S[K+1]+I,
+					K := K+J
+				end,
+				J:=J*I
+			end
+		end
+	end,
+    foreach (I in 2..N-R) 
+		Sum := Sum-S[I+1]
+	end,
+    foreach (I in R+1..N) 
+		Sum:=Sum+S[I+1]
+	end,
+    printf("%w\n",Sum).	

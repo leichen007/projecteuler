@@ -1,0 +1,60 @@
+/*
+#include <stdio.h>
+
+#define T 10
+
+long long c;
+
+void go(int s,int v,int n,long long p,int k,long long f) {
+    if (s>70) return;
+    if (n>=T&&s!=70) return;
+    if (n==20) {
+        c+=f/p;
+        return;
+    }
+    go(s+(n<T)*v,v,n+1,p*(k+1),k+1,f);
+    for (v--;v;v--) 
+	    go(s+(n<T)*v,v,n+1,p,1,f);
+}
+
+int main() {
+    long long f=1;
+	
+    for (long long i=1;i<=20;i++) 
+	    f*=i;
+    go(0,12,0,1,0,f);
+    printf("%lli\n",c);
+    return 0;
+}
+*/
+main=>
+    F=1, C=new_array(1),C[1] = 0,
+
+    foreach (I in 1..20) 
+	    F := F*I
+	end,
+    go(0,12,0,1,0,F,C),
+    printf("%w\n",C[1]).
+	
+go(S,V,N,P,K,F,C)=>
+    F1 = 3,
+    if (S>70) then
+	    F1 := 1
+	end,
+    if (N>=10 && S!==70) then
+	    F1 := 1
+	end,
+	
+    if (F1==3 && N==20) then
+        C[1] := C[1] + F//P, 
+		F1 := 2
+    end,
+	
+	if (F1==3) then
+        go(S+cond(N<10,1,0)*V,V,N+1,P*(K+1),K+1,F,C),
+		V := V-1,
+        while (V!==0) 
+	        go(S+cond(N<10,1,0)*V,V,N+1,P,1,F,C),
+			V := V-1 
+		end
+	end.

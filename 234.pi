@@ -1,0 +1,98 @@
+/*
+#include<stdio.h>
+
+#define M 1000000
+
+int p[M]={0};
+long long s=0;
+void prime()
+{
+    long i,j;
+    p[0]=1; 
+	p[1]=1;
+	
+    for(i=2;i<=1000;i++)
+        if(p[i]==0)
+            for(j=2;i*j<M;j++)
+                p[i*j]=1;
+}
+
+
+int main()
+{
+    long long l=2,u,i,j;
+    prime();
+    for(i=3;i<M;i++)
+    {
+        //if(i%1000==0);
+        //    printf(" %lld ",i);
+        if(p[i]==0)
+        {
+            u=i;
+            for(j=l*l+l;j<=u*u;j+=l)
+                if(j%u!=0 && j<=999966663333)
+                    s+=j;
+
+            for(j=u*u-u;j>=l*l;j-=u)
+                if(j%l!=0 && j<=999966663333)
+                    s+=j;
+
+            l=u;
+        }
+    }
+
+    printf("%lld",s);
+    return 0;
+}
+*/
+
+main=>
+    M = 1000000,
+    L=2,U=0,J=0,
+	S=0,
+
+    P = new_array(M),
+    foreach(I in 1..M)
+        P[I] := 0
+    end,
+    P[1] :=1, 
+	P[2] :=1,
+	
+	J=0,
+    foreach(I in 2..1000)
+	    
+        if(P[I+1]==0) then
+		    J := 2,
+			
+            while(I*J<1000000)
+                P[I*J+1] := 1,
+				J := J+1
+			end
+		end
+    end,
+	
+    foreach(I in 3..M-1)
+        if(P[I+1]==0) then
+            U := I,
+			J := L*L+L,
+            while(J<=U*U)
+                if(J mod U !==0 && J<=999966663333) then
+                    S := S+J
+				end,
+			
+			    J := J+L
+			end,
+
+			J := U*U-U,
+            while(J >= L*L)
+                if(J mod L !==0 && J<=999966663333) then
+                    S :=S+J
+				end,
+			    J := J-U		
+			end,
+
+            L := U
+        end
+    end,
+	
+	printf("%w",S).

@@ -1,0 +1,51 @@
+/*
+#include <iostream>
+
+const unsigned N=100;
+double cache[N][N] = { 0 };
+double p(int n, int m) {
+  if (n<=0) return 1;
+  if (m==0) return 0;
+  //double &r = cache[n-1][m-1];
+  //double r = cache[n-1][m-1];
+  if (!cache[n-1][m-1])
+    for (int q=1; q<n+n; q+=q)
+      cache[n-1][m-1] = std::max(cache[n-1][m-1], (p(n-q,m)+p(n-q,m-1)+(q+q-1)*p(n,m-1))/(q+q+1));
+  return cache[n-1][m-1];
+}
+
+int main() {
+  std::cout << '.' << (long)(5e7*(p(N,N) + p(N,N-1))+0.5) << "\n";
+}
+*/
+main=>
+	N=100,
+	Cache=new_array(N),
+	
+    foreach(I in 1..N)
+        Aux=new_array(N),
+        foreach(J in 1..N)
+            Aux[J] := 0
+        end,
+        Cache[I] := Aux
+    end,
+	
+    X=5*pow(10,7)*(p(N,N,Cache) + p(N,N-1,Cache))+0.5,
+    printf("0.%w",X.to_integer()).
+	
+p(N,M,Cache)=Rtn =>
+  if (N<=0) then 
+	 Rtn = 1
+  elseif(M==0)  then
+     Rtn = 0
+  else
+	  Q=1,
+	  if (Cache[N,M]==0) then
+		while (Q<N+N)
+		  Cache[N,M] := max(Cache[N,M] , (p(N-Q,M,Cache)+p(N-Q,M-1,Cache)+(Q+Q-1)*p(N,M-1,Cache))/(Q+Q+1)),
+		  Q := Q+Q
+		end
+	  end,
+	  Rtn = Cache[N,M]
+   end.
+

@@ -1,0 +1,110 @@
+/*
+#include <stdio.h>
+#include <string.h>
+void printArr();
+long long int ways[7][8]={
+  {0,1,1,1,1,0,0,1},
+  {1,0,0,0,0,1,0,0},
+  {1,0,0,0,0,0,1,0},
+  {1,0,0,0,0,0,0,0},
+  {0,1,1,0,1,0,0,1},
+  {1,0,0,0,0,1,0,0},
+  {1,0,0,0,0,0,1,0},
+};
+
+long long int x10[7][8];
+
+int y; 
+long long int count(int level,int t0) {
+  if (level==0) 
+    return ways[t0][y];
+
+  long long int sum=0;
+
+  for (int t1=0;t1<7;t1++)
+    if (ways[t0][t1])
+      sum+=ways[t0][t1]*count(level-1,t1);
+  
+  return sum%100000000;
+}
+
+int main() {
+
+  for (int power=1;power<=12;power++) {
+    for (int x=0;x<7;x++) 
+	  for (y=0;y<8;y++)
+        x10[x][y]=count(4,x);  // *5
+
+    memcpy(ways,x10,sizeof(long long int)*56);
+
+    for (int x=0;x<7;x++) 
+	  for (y=0;y<8;y++)
+        x10[x][y]=count(1,x);  // *2
+    memcpy(ways,x10,sizeof(long long int)*56);
+  }
+
+  printf("%d->%d %lld\n",0,7,ways[0][7]);
+}
+
+*/
+main=>
+	Ways = {
+	  {0,1,1,1,1,0,0,1},
+	  {1,0,0,0,0,1,0,0},
+	  {1,0,0,0,0,0,1,0},
+	  {1,0,0,0,0,0,0,0},
+	  {0,1,1,0,1,0,0,1},
+	  {1,0,0,0,0,1,0,0},
+	  {1,0,0,0,0,0,1,0}
+	},
+
+	X10 = {
+	  {0,1,1,1,1,0,0,1},
+	  {1,0,0,0,0,1,0,0},
+	  {1,0,0,0,0,0,1,0},
+	  {1,0,0,0,0,0,0,0},
+	  {0,1,1,0,1,0,0,1},
+	  {1,0,0,0,0,1,0,0},
+	  {1,0,0,0,0,0,1,0}
+	},
+
+    foreach (Power in 1..12) 
+        foreach (X in 0..6) 
+	        foreach (Y in 0..7)
+                X10[X+1,Y+1] :=count(4,X,Y,Ways)
+	        end
+	    end,
+
+        assign(Ways,X10),
+	
+        foreach (X in 0..6) 
+	        foreach (Y in 0..7)
+                X10[X+1,Y+1] :=count(1,X,Y,Ways)
+	        end
+	    end,
+
+	    assign(Ways,X10)
+    end,
+  
+    printf("%w\n",Ways[1,8]).
+  
+count(Level,T0,Y,Ways)=Rtn =>
+    if (Level==0) then
+        Rtn = Ways[T0+1, Y+1]
+    else
+	    Sum=0,
+
+	    foreach (T1 in 0..6)
+		    if (Ways[T0+1,T1+1] != 0) then
+		        Sum := Sum+Ways[T0+1,T1+1]*count(Level-1,T1,Y,Ways)
+		    end
+	    end,
+	    Rtn = Sum mod 100000000
+    end.
+   
+assign(Ways,X10)=>
+    foreach(I in 1..7)
+	    foreach(J in 1..8)
+		    Ways[I,J] := X10[I,J]
+		end
+	end.
